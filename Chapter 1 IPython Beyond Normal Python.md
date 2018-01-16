@@ -49,3 +49,26 @@ Functions defined in the script are now available as well.
 
 %timeit for a single line
 %%timeit for turning it into cell magic.
+%time for a cell in Jupyter
+
+## In and Out objects
+IPython stores a In and Out variable which can be used to save computation time of intensive commands. The underscore contains the previous output. Double underscore contains the output before that and so on.
+A shortcut for this is the underscore aswell underscore 2 equals Out[2].
+
+Ending with a semicolon, ;, supresses the output.
+
+## Using Shell commands in IPython
+One can acces the shell or terminal commands in IPython by using the exclamation mark! Everything behind an exclamation mark is interpreted as a shell command.
+
+You can also pass values to and from the shell, for example contents = !ls.
+
+The other way around, passing IPyhton objects to the shell van be done with the {varname} syntax.
+
+Magic commands with the percentage can also be used to acces shell commands. %cd ..
+
+##  Debugging
+A lot goes wrong during programming in Python. With the %xmode one can acces different debugging methods, Plain, Context and Verbose. The default is Context.
+
+If the traceback is not enough one can use the magic %debug for more interactive debugging.
+
+You can also run a script interactively with the magic %run -d command. Use next to navigate.
