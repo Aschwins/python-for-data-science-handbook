@@ -106,3 +106,36 @@ np.log(), np.log2(), np.log10()
 np.expm1(x) #exp(x)-1
 np.log1p(x) #log(1+x)
 ```
+
+### More advanced UFuncs.
+``` Python
+# Defining the ouput beforehand can also speed up the process
+x = np.arange(5)
+y = np.empty(5)
+np.multiply(x,10,out=y)
+
+y = np.zeros(10)
+np.power(2,x,out=y[::2])
+```
+
+### Aggregates, vereniging/ verzameling
+``` Python
+# applying UFuncs on an entire array
+x = np.arange(1,6)
+
+# .reduce()
+np.add.reduce(x) #gives the sum of all elements: 15
+np.multiply.reduce(x) # gives the product of all elements
+
+# .accumulate()
+np.add.accumulate(x) #gives the sum of alle elements and storing intermediate results
+np.multiply.accumulate(x) # gives the product of all elements and stores intermediate results
+```
+
+### Outer Products
+Pairwise multiplication/addition/etc. is done with .outer(x,x). Returns a matrix of size(x) by size(x).
+
+### Sum, Min, Max,
+Using the np.sum, np.min and np.max functions is a lot faster. Can also be called quicker via: .min(), .max(), .sum().
+
+Can also be used on arrays. By default takes the entire array, otherwise input axis=0,1. Where the axis = 0 means the x-axis will collapse and axis = 1, means the y axis will collapse. np.
