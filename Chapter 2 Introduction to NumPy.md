@@ -139,3 +139,19 @@ Pairwise multiplication/addition/etc. is done with .outer(x,x). Returns a matrix
 Using the np.sum, np.min and np.max functions is a lot faster. Can also be called quicker via: .min(), .max(), .sum().
 
 Can also be used on arrays. By default takes the entire array, otherwise input axis=0,1. Where the axis = 0 means the x-axis will collapse and axis = 1, means the y axis will collapse. np.
+
+### Comparison
+
+Numpy also has a lot of logica operators. np.equal (==), np.not_equal(!=), np.less (<), etc.
+
+### Working with bool Arrays
+np.count_nonzero(), np.sum(), np.any(), np.all()
+
+### Bitwise logic operators
+&,|,^,~ == np.bitwise_and(), np.bitwise_or(), np.bitwise_xor(), np.bitwise_not()
+
+print("Number of days without rain: ", np.sum(insights == 0))
+print("Number of days with rain: ", np.sum(insights != 0))
+print("Number of days with rain <0.1: ", np.sum((insights > 0) & (insights <=0.1)))ins
+
+Also combine these to make masks on arrays to get what insights you want.
