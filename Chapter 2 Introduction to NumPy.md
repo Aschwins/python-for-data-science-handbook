@@ -155,3 +155,19 @@ print("Number of days with rain: ", np.sum(insights != 0))
 print("Number of days with rain <0.1: ", np.sum((insights > 0) & (insights <=0.1)))ins
 
 Also combine these to make masks on arrays to get what insights you want.
+
+### Masks
+It is often very wise to create different masks for your data, so you can ask it alot of questions very efficiently. Consider an example of a weather dataset. One can make a mask of the summer, one can make a mask of rainy days. And after that you can ask yourself questions about rainy days in the summer very easily. data[summer & rainy] or data[rainy & ~summer]. np.max(data[summer]), etc.
+
+### Fancy indexing
+In numpy you can use fancy indexing to get subsets from your data very easily. data[array], gives you an array back with the values of your data on the index of the array for example. Of course you can also modify your data with this accordingly. data[i] = x, for indices i, and constant x.
+
+Sometimes the modifying behaves oddly, because iterations are done immediately. x[i] += 1, is actually x[i] = x[i]+ 1. So if you have indices i, which contains the same constant c twice. One would think 2 would be added to x[c], but that's not correct, because computations are done immediately the old value of x[c] is used twice. So 1 only gets added once.
+
+To avoid this use .at() function of numpy. np.add.at(x,i,1) = np.add.at(data,indices,value).
+
+### Binning data
+Sometime you want to split your data in several bins to see where most values are contained. Also called a histogram. Numpy can also do this manually with bins = np.linspace(lower,upper,step) and i = np.searchsorted(bins,x). Which sorts all values of x in the bins. So it returns a matrix i containing indices of the bins where the value of x is sorted, so i has the same value of x.
+
+## Sorting Arrays
+Starting a new header here, because this is an important subject in all of computer science. Sorting array algoritms are: insertion sorts, selection sorts, merge sorts, quick sorts, bubble sorts, and many many more. Sort out that data!
