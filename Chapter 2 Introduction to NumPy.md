@@ -171,3 +171,14 @@ Sometime you want to split your data in several bins to see where most values ar
 
 ## Sorting Arrays
 Starting a new header here, because this is an important subject in all of computer science. Sorting array algoritms are: insertion sorts, selection sorts, merge sorts, quick sorts, bubble sorts, and many many more. Sort out that data!
+
+One can always write a sorting algorithm manually, for example, bogosort or swapsort, but NumPy has some pretty efficient sorting algoritms built in already:
+
+np.sort(), np.argsort().
+
+Which can also have matrices as an input. Where it will sort the colums for axis =0 and the rows for axis =1 (sorting along the axis). Keep in mind that all relations will be lost.
+
+
+### Partitioning arrays
+Partitioning can be done with np.partition(array, k, axis=0). Where k stands for where the partition is supposed to be. The result is the same array with the k smallest values on the left and the rest on the right.
+np.argpartition() is also available.
