@@ -42,4 +42,31 @@ Pandas recognizes two characters as missing data: 'None', the python standard wh
 Aggregates over 'None' result in error as python can only recognize it as a python object, but since NaN is recognized as a floating point, computations can be done. They're not always usefull since, min/max/sum with only only NaN value will result in NaN. If you want to ignore the nan one can use nansum, nanmin, nanmax.
 
 ## Operating on Null values.
-isnull(), dropna(), notnull(), fillna()
+isnull(), dropna(), notnull(), fillna(). with parameters how='any', 'all'; thresh=3, axis = 'rows', 'columns'. We can also fill in the NaN values with fillna(), method = 'bfill', 'ffill', np.mean(data), axis=0. Easy.
+
+## Hierarchical indexing
+Hierarchical indexing is used to store higher (than 2) dimensional data in a pandas dataframe. Hierachical indexing can be recognized by pandas dataframes who have a MultiIndex() instead of a regular Index. Creating MultiIndex can be done in different ways. index = pd.MultiIndex() or just defining and index with two dimensions in the index parameter in pandas. For example:
+``` python
+df = pd.DataFrame(np.random.rand(4, 2),
+                  index=[['a', 'a', 'b', 'b'], [1, 2, 1, 2]],
+                  columns=['data1', 'data2'])
+```
+Gives a 4 by 2 matrix with indices: a1,a2,b1,b2 (multilayer). Here the work of creating a MultiIndex is done in the background.
+
+If you pass a dictionary with appropriate tuples as keys, Pandas will automatically recognize this and use MultiIndex by default. So data = {(ind1,ind2): value, (ind1,ind2): value, ...} pd.Series(data)
+
+Nevertheless it's sometimes usefull to create a MultiIndex explicitly. There are several methods for this:
+
+``` python
+pd.MultiIndex.from_arrays([[a,a,b,b],[1,2,1,2]])
+pd.MultiIndex.from_tuples([(a,1),(a,2),(b,1),(b,2)])
+pd.MultiIndex.from_product([[a,b],[1,2]]) #here is takes the cartesian product.
+pd.MultiIndex(levels==[[a,b],[1,2]], labels =[[0,0,1,1],[0,1,0,1]])
+```
+
+Any of the above objects can be passed as the index argument when creating a Series or Dataframe, or be passed to reindex method of a existing Series of DataFrame.
+
+Sometimes it is convenient to name the levels of the MultiIndex. This can be accomplished by passing the names argument to any of the above MultiIndex constructors, or by setting the names attribute of the index after the fact:
+pop.index.names = ['state', 'year']. This way all the indices are aggregated in one name or group, this can be usefull to keep track of what all the indices mean!
+
+All of the above is described for indices and indexes for rows, but since the rows and columns in a DataFrame are entirely symmetrical all of the above can also be applied for the columns of a Dataframe.
