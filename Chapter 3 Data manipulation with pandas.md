@@ -70,3 +70,12 @@ Sometimes it is convenient to name the levels of the MultiIndex. This can be acc
 pop.index.names = ['state', 'year']. This way all the indices are aggregated in one name or group, this can be usefull to keep track of what all the indices mean!
 
 All of the above is described for indices and indexes for rows, but since the rows and columns in a DataFrame are entirely symmetrical all of the above can also be applied for the columns of a Dataframe.
+
+With all these indices in place there are a ton of ways to acces the data. For fancy slicing it's wise to use: pd.IndexSlice.
+
+## Rearranging Multi-indices
+Many of the MultiIndex slicing operations will fail if the index is not sorted! So use .sort_index(). Now you can slice away all you want!
+
+Another way to rearrange hierarchical data is to turn the index labels into columns; this can be accomplished with the reset_index method. Calling this on the population dictionary will result in a DataFrame with a state and year column holding the information that was formerly in the index. For clarity, we can optionally specify the name of the data for the column representation.
+
+And the other way around van be done with the set_index method of the DataFrame, which returns a multiply indexed DataFrame.
