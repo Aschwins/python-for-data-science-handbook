@@ -79,3 +79,45 @@ Many of the MultiIndex slicing operations will fail if the index is not sorted! 
 Another way to rearrange hierarchical data is to turn the index labels into columns; this can be accomplished with the reset_index method. Calling this on the population dictionary will result in a DataFrame with a state and year column holding the information that was formerly in the index. For clarity, we can optionally specify the name of the data for the column representation.
 
 And the other way around van be done with the set_index method of the DataFrame, which returns a multiply indexed DataFrame.
+
+## Index setting and resetting
+If one wants to reset all indices as columns:
+
+``` python
+pop_flat = pop.reset_index(name='population')
+```
+
+But normally the data is already in this format and you want to change it to Multiindex. This can be done with set_index
+
+``` python
+pop_flat.set_index(['state', 'year'])
+```
+
+## Data aggregations on Multi indices
+One can use aggregations across indices for calculating mean, sum, max, min, etc.
+``` python
+data.mean(level='index')
+data.mean(axis=1, level='type')
+```
+
+# Combining Datasets: Concat and Append
+Remember:
+``` python
+np.concatenate([a,b,c], axis=0)
+```
+
+About the same in Pandas:
+
+``` python
+pd.concat(objs, axis=0, join='outer', join_axes=None, ignore_index=False,
+keys=None, levels=None, names=None, verify_integrity=False,
+copy=True)
+```
+
+Where objs = [obj1,obj2,...]. Where verify_integrity=True, will verify if indices overlap. Where ignore_index=True will ignore overlapping indices and just make new ones. Where keys=['obj1', 'obj2'] will create a MultiIndex so overlapping indices are impossible. Where join='outer' means it will take the union of both datasets and produce NaN values for columns or indices which aren't in both datasets. join='inner' will take the interesection of both datasets and will remove columns and indices which arent in both datasets. If you wan't to specify yourself what rows and columns will be kept, one can do this with join_axes = [obj1.columns]. Where in this case it will only take the columns of the first object.
+
+By definition the concatenation takes place row-wise with the DataFrame (axis=0).
+
+Because merging datasets together is so common on can use the object function df1.append(df2) for convenience. .append on a pandas dataframe does not alter the original dataframe, but just makes a copy.
+
+## Combining datasets: Merge & Join
