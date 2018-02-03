@@ -121,3 +121,35 @@ By definition the concatenation takes place row-wise with the DataFrame (axis=0)
 Because merging datasets together is so common on can use the object function df1.append(df2) for convenience. .append on a pandas dataframe does not alter the original dataframe, but just makes a copy.
 
 ## Combining datasets: Merge & Join
+
+While concatenating two datasets is just taking the union or the intersection it is often desired to combine two datasets. If two datasets have some values in common one does not want to add another row or column for both of these entries. You want to merge them! Enter pd.merge()
+
+The signature is as follows:
+
+``` python
+pd.merge(left, right, how='inner', on=None, left_on=None, right_on=None, left_index=False, right_index=False, sort=False, suffixes=('_x', '_y'), copy=True, indicator=False, validate=None)
+```
+Where on specifies the column on which both DataFrames have to merge. This only works if both dataframes have this column.
+Where left_on, right_on specify columns on which you want to merge if both datasets don't have the same column-name. This makes merging possible in al sorts of datasets.
+
+One can also take a dataframe df, and join it with another df2 with df.join(df2, left_index=True, right_on = 'name') for example.
+
+The how is very important in merges and join. The default how is 'inner' so it will take the intersection. If one does not want to leave several variables begin you should use 'outer' to take the union of both datasets!
+
+Sometimes two datasets have the same column name with different data in it. Specifying on where you want to merge automatically creates a suffix ```_x, _y```
+
+df.query()
+
+## Aggregation and Grouping
+
+Pandas has the same aggregation methods, sum, max, min, etc. as the numpy library for arrays. It also has a very usefull .describe() method which shows several of these aggregations. Other usefull aggregations are count(), first(), last(), mean(), median(), std(), var(), prod()
+
+## GroupBy: Split, Apply, Combine
+
+* The split step involves breaking up and grouping a DataFrame depending on the value of the specified key.
+* The apply step involves computing some function, usually an aggregate, transformation or filtering withing the individual groups.
+* The combine step merges the results of these operations into an output array.
+
+.groupby('key').min(), max() etc. Lets you compute aggregation alot quicker over several groups found in the data set.
+
+.aggregate() is also an aggregation method, but a lot more versital. It can take strings, lists, dicts and functions as input. df.groupby('key').aggregate(['min', np.median, max]). No problem.
