@@ -153,3 +153,9 @@ Pandas has the same aggregation methods, sum, max, min, etc. as the numpy librar
 .groupby('key').min(), max() etc. Lets you compute aggregation alot quicker over several groups found in the data set.
 
 .aggregate() is also an aggregation method, but a lot more versital. It can take strings, lists, dicts and functions as input. df.groupby('key').aggregate(['min', np.median, max]). No problem.
+
+Filtering like the english word already says is used in databases to filter out data you don't need. filter() takes a function as argument where you can filter out, what you don't want.
+
+One can also tranform the data by using the df.groupby('key').transform(lambda x: x - np.mean(x)), or inputting any other transformation function.
+
+You can input a list, a dict or a key in a groupby
