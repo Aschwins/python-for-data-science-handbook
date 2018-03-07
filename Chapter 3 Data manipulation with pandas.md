@@ -159,3 +159,60 @@ Filtering like the english word already says is used in databases to filter out 
 One can also tranform the data by using the df.groupby('key').transform(lambda x: x - np.mean(x)), or inputting any other transformation function.
 
 You can input a list, a dict or a key in a groupby
+
+## Vectorized String Operations
+
+With the Pandas library one can call on a dataframe containing strings with df.str.[method]. Using the .str.[TAB] one can call onto all vectorized string methods.
+
+### Miscellaneous methods
+Finally, there are some miscellaneous methods that enable other convenient operations:
+
+| Method | Description |
+|--------|-------------|
+| ``get()`` | Index each element |
+| ``slice()`` | Slice each element|
+| ``slice_replace()`` | Replace slice in each element with passed value|
+| ``cat()``      | Concatenate strings|
+| ``repeat()`` | Repeat values |
+| ``normalize()`` | Return Unicode form of string |
+| ``pad()`` | Add whitespace to left, right, or both sides of strings|
+| ``wrap()`` | Split long strings into lines with length less than a given width|
+| ``join()`` | Join strings in each element of the Series with passed separator|
+| ``get_dummies()`` | extract dummy variables as a dataframe |
+
+### Methods using regular expressions
+
+In addition, there are several methods that accept regular expressions to examine the content of each string element, and follow some of the API conventions of Python's built-in ``re`` module:
+
+| Method | Description |
+|--------|-------------|
+| ``match()`` | Call ``re.match()`` on each element, returning a boolean. |
+| ``extract()`` | Call ``re.match()`` on each element, returning matched groups as strings.|
+| ``findall()`` | Call ``re.findall()`` on each element |
+| ``replace()`` | Replace occurrences of pattern with some other string|
+| ``contains()`` | Call ``re.search()`` on each element, returning a boolean |
+| ``count()`` | Count occurrences of pattern|
+| ``split()``   | Equivalent to ``str.split()``, but accepts regexps |
+| ``rsplit()`` | Equivalent to ``str.rsplit()``, but accepts regexps |
+
+## Working with time Series
+
+We have time stamps, time intervals & series, and time deltas. Where time stamps equal an exact point in time, time intervals equal a time interval with a fixed beginning and endpoint and time deltas and exact time length.
+
+Userfull packages for time series object are the **datetime**, python native package. The **dateutil**, 3rd party package, and if you're ready for some advanced time zone problems try **pytz**.
+
+All of the above time crunching methods are python native so relatively slow compared to a language like C. This is why the numpy-team added a 64bit time variable called datetime64. Which can be called with:
+
+```
+date = np.array('2017-4-7', datetype = np.datetime64) #or
+np.datetime64('2017-4-7 12:00')
+```
+
+### Pandas, always winning
+Now of course our lovely pandas library also made its own addition to the numpy datetime64 with for example:
+```
+pd.to_datetime("23rd of july 2016")
+pd.to_timedelta(np.arange(12), 'D')
+pd.DatetimeIndex(['2015-7-4', '2015-8-5', '2016-3-4'])
+```
+Where the first creates a date out of a string where it is able to. The second creates a time delta and the third one creates a pandas index which can be used in Series and DataFrame pandas objects.
