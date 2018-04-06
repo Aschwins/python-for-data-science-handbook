@@ -216,3 +216,5 @@ pd.to_timedelta(np.arange(12), 'D')
 pd.DatetimeIndex(['2015-7-4', '2015-8-5', '2016-3-4'])
 ```
 Where the first creates a date out of a string where it is able to. The second creates a time delta and the third one creates a pandas index which can be used in Series and DataFrame pandas objects.
+
+216
