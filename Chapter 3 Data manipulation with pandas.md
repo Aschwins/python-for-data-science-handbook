@@ -217,4 +217,9 @@ pd.DatetimeIndex(['2015-7-4', '2015-8-5', '2016-3-4'])
 ```
 Where the first creates a date out of a string where it is able to. The second creates a time delta and the third one creates a pandas index which can be used in Series and DataFrame pandas objects.
 
-216
+## Working with big data frames, pd.eval(), pd.query()
+So if one is working with huge dataframes and one want to operate on them with `+, -, /, *, &, |, .loc, <,>, etc.` it's better to use `pd.eval('operation')`. eval() evaluates certain operations alot more efficiently, that way it's faster.
+
+eval() also has a method applicable on dataframes. It rather easy to use since you can use column names directly.
+
+Us `df.eval('operation')` with column names `A + B` for example respectively. If you want use local variables use `@` in from of the variable name.
