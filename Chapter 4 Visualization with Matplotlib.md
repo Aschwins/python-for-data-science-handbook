@@ -110,3 +110,117 @@ plt.plot(x, x + 3, ':r')    # dotted red
 ```
 
 ### Adjusting the Plot: Axes Limits
+
+Adjusting the axes, adding labels, adding a legend is all done in a very easy fashion with matplotlib. The following codes shows how to do several of these things.
+
+``` Python
+plt.xlim(-1,1)
+plt.ylim(-1.5,1.5)
+
+plt.axis([xmin, xmax, ymin, ymax])
+plt.axis('tight')
+plt.axis('equal')
+
+plt.title('A Sine Curve')
+plt.xlabel('x')
+plt.ylabel('sin(x)')
+
+plt.plot(x, np.sin(x), '-g', label='sin(x)')
+plt.plot(x, np.cos(x), ':b', label='cos(x)')
+plt.legend()
+```
+
+In an object oriented plot everything is done in a similar fashion:
+
+``` python
+ax = plt.axes()
+
+plt.plot() = ax.plot()
+plt.legend() = ax.legend()
+plt.xlabel() = ax.set_xlabel()
+plt.ylabel() = ax.set_ylabel()
+plt.xlim() = ax.set_xlim()
+plt.ylim() = ax.set_ylim()
+plt.title() = ax.set_title()
+
+ax = plt.axes()
+ax.plot(x, np.sin(x))
+
+# Setting all options all at once:
+ax.set( xlim=(0, 10), ylim=(-10,10),
+        xlabel = 'x', ylabel='sin x'
+        title = 'Sinus of the x'
+      )
+```
+
+In the above plots we've taken a lot of (100) data points so all the Sine lines look pretty smooth. But something is going on under the hood. It actually making a scatterplot and chosing a default symbol value '-' to connect the dots.
+
+### Simple Scatter Plots
+
+There are several nice markers you can use to scatter you data among a plot:
+
+``` Python
+rng = np.random.RandomState(0)
+markers = ['o', '.', ',', 'x', '+', 'v', '^', '<', '>', 's', 'd']
+
+for marker in markers:
+  plt.plot(rng.rand(5), rng.rand(5), marker,
+  label = "marker = {0}".format(marker))
+
+plt.legend()
+plt.xlim(0, 1.8)
+```
+
+Colors and markers can be combined!
+
+``` Python
+plt.plot(x, y, '-ok'); # line (-), circle marker (o), color black (k)
+```
+
+And plots can be tuned of course:
+
+``` Python
+plt.plot(x, y, color = 'gray'
+marker = 'p', markersize = 15,
+linewidth = 4,
+markerfacecolor = 'white'
+markeredgecolor = 'grey'
+markeredgewidth = '2'
+)
+```
+
+### Scatter Plots with plt.scatter
+
+``` Python
+plt.scatter(x, y, marker = 'o')
+```
+
+The primary difference between `plt.plot` and `plt.scatter` is that with plt.scatter each individual point (size, face, color, edge color, etc.) can be individually controlled or mapped to data.
+
+``` Python
+rng = np.random.RandomState(0)
+x = rng.randn(100)
+y = rng.randn(100)
+
+sizes = 1000 * rng.rand(100)
+colors = rang.rand(100)
+
+plt.scatter(x, y, c = colors, s = sizes, alpha = 0.3, cmap = 'viridis')
+plt.colorbar()
+```
+
+``` Python
+from sklearn.dataset import load_iris
+iris = load_iris()
+
+features = iris.data.T
+
+plt.scatter(features[0], features[1], alpha = 0.2,
+s=100 * features[3], color = iris.target, cmap='viridis',
+plt.xlabel(iris.feature_names[0])
+plt.ylabel(iris.feature_names[1]))
+
+```
+
+## Visualize Errors
+237
