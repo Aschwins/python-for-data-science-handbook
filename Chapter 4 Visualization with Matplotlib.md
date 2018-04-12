@@ -222,5 +222,12 @@ plt.ylabel(iris.feature_names[1]))
 
 ```
 
-## Visualize Errors
-237
+## Visualizing Errors
+
+Some variables are not really certain that's why the called variables. Sometime we can say a variable has a value x with max error dx. Visualising values with error rates can be done with:
+
+``` Python
+plt.errorbar(x, y, error = dy, fmt = 'o', color = 'black', ecolor = 'lightgray', elinewidth = 2, capsize = 3)
+```
+
+There are a lot of other ways to plot error bars. Horizontal ones, `plt.xerr()`, one sided ones and a ton of other variants. See docstring of plt.errorbar
