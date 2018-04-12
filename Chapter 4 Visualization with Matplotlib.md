@@ -230,4 +230,29 @@ Some variables are not really certain that's why the called variables. Sometime 
 plt.errorbar(x, y, error = dy, fmt = 'o', color = 'black', ecolor = 'lightgray', elinewidth = 2, capsize = 3)
 ```
 
-There are a lot of other ways to plot error bars. Horizontal ones, `plt.xerr()`, one sided ones and a ton of other variants. See docstring of plt.errorbar
+There are a lot of other ways to plot error bars. Horizontal ones, `plt.xerr()`, one sided ones and a ton of other variants. See docstring of plt.errorbar.
+
+Now if you want to visualize an error area in a line plot. One can also use plt.fill_between(). Let us define a Gaussian Proces Regression first.
+
+``` Python
+from sklearn.gaussian_process import GaussianProcess
+
+# define the model and draw some data
+model = lambda x: x * np.sin(x)
+xdata = np.array([1,3,5,6,8])
+ydata = model(xdata)
+
+# Compute the Gaussian Process fit
+gp = GaussianProcess(corr = 'cubic', theta0 = 1e-2, thetaL = 1e-4, thetaU = 1E-1, random_start = 100)
+gp.fit(xdata[:, np.newaxis], ydata)
+
+xfit = np.linspace(0, 10, 1000)
+yfit, MSE = gp.predict(xfit[:, np.newaxis], eval_MSE = True)
+dyfit = 2 * np.sqrt(MSE)
+
+# Visualize the result
+plt.plot(xdata, ydata, 'or')
+plt.plot(xfit, yfit, '-', color = 'gray')
+
+plt.fill_between(xfit, yfit-dy, yfit+dy, color = 'lightgray', alpha = 0.2)
+```
