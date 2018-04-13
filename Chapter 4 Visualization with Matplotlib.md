@@ -296,3 +296,5 @@ plt.clabel(contours, inline = True, fontsize = 8)
 
 plt.imshow(Z, extent = [0,5,0,5], origin ='lower', cmap = 'RdGy', alpha= 0.5)
 ```
+
+The combinations of all above functions give you endless ways to create beautiful 2 dimensional plots of 3 dimensional data!
