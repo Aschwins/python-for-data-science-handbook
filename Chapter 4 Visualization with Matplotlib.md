@@ -256,3 +256,43 @@ plt.plot(xfit, yfit, '-', color = 'gray')
 
 plt.fill_between(xfit, yfit-dy, yfit+dy, color = 'lightgray', alpha = 0.2)
 ```
+
+## Visualizing three dimensional data
+
+So far we've only been visualizing two dimensional data, which is rather easy and also a tad boring. Visualizing three dimensional data is a lot more fun, and one way to do it via Contour Plots!
+
+We'll first define a three dimensial function:
+
+``` Python
+def f(x,y):
+  return np.sin(x) ** 10 + np.cos(10 + y * x) * np.cos(x)
+
+x = np.linspace(0, 5, 50)
+y = np.linspace(0, 5, 40)
+
+X, Y = np.meshgrid(x,y) # meshgrid creates a 2 dimensional grid of two, one dimensional vectors. So in this
+                        # case we have a grid of 2000 points with x-values x, and y-values y
+
+Z = f(X, Y)
+
+plt.contour(X, Y, Z, 20, cmap = 'RdGy')
+plt.contourf(X, Y, Z, 50, cmap = 'RdGy')
+
+```
+
+`plt.contour` and `plt.contourf` are great, but we can also visualize it a third way with `plt.imshow`. Here we can call a function and plot it on a surface.
+
+``` Python
+plt.imshow(Z, extent=[0,5,0,5], origin = 'lower', cmap = 'RdGy')
+```
+
+Where extent defines the grid and origin defines a regular x, y grid.
+
+We can also combine the two with the super awesome `plt.clabel()`, to get an epic picture! Like this:
+
+``` Python
+contours = plt.contour(X, Y, Z, 5, color='black')
+plt.clabel(contours, inline = True, fontsize = 8)
+
+plt.imshow(Z, extent = [0,5,0,5], origin ='lower', cmap = 'RdGy', alpha= 0.5)
+```
