@@ -354,7 +354,7 @@ cb = plt.colorbar()
 cb.set_label('counts in bin')
 ```
 
-< img src="./static/images/hist3.png" width = "400px"/>
+<img src="./static/images/hist3.png" width = "400px"/>
 
 ### `plt.hexbin()`
 
@@ -398,4 +398,4 @@ cb.set_label("density")
 
 ## Customizing Plot Legends
 
-blz 249 
+blz 249
