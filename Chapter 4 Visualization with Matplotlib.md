@@ -313,4 +313,4 @@ plt.hist(data)
 plt.hist(data, bins = 30, histtype = 'stepfilled', alpha = 0.5, color = 'steelblue', edgecolor = 'none')
 ```
 
-![/static/images/hist1.png](a somewhat more advanced histogram)
+<img src="./static/images/hist1.png " width="350px"/>
