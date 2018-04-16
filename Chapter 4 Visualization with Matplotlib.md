@@ -298,3 +298,19 @@ plt.imshow(Z, extent = [0,5,0,5], origin ='lower', cmap = 'RdGy', alpha= 0.5)
 ```
 
 The combinations of all above functions give you endless ways to create beautiful 2 dimensional plots of 3 dimensional data!
+
+## Histograms, Binnings, and Density
+
+Data is, in almost all cases, not just data. It probably has a distribution of some sort. Plotting distributions is done very easily with `plt.hist()`. Let's show this with some code.
+``` Python
+import numpy as np; import pandas as pd; import matplotlib.pyplot as plt; matplotlib
+data = np.random.randn(1000)
+
+# easy hist:
+plt.hist(data)
+
+# customized Histograms
+plt.hist(data, bins = 30, histtype = 'stepfilled', alpha = 0.5, color = 'steelblue', edgecolor = 'none')
+```
+
+![/static/images/hist1.png](a somewhat more advanced histogram)
