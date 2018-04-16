@@ -314,3 +314,88 @@ plt.hist(data, bins = 30, histtype = 'stepfilled', alpha = 0.5, color = 'steelbl
 ```
 
 <img src="./static/images/hist1.png " width="350px"/>
+
+The way the plot is structured with `histtype = 'stepfilled'` and `alpha = 0.3` is also a very nice way to visualize multiple histograms.
+
+``` Python
+x1 = np.random.normal(0, 0.8, 1000)
+x2 = np.random.normal(-2, 1, 1000)
+x3 = np.random.normal(3, 2, 1000)
+
+kwargs = dict(bins = 40, histtype = 'stepfilled', alpha = 0.3, normed = True)
+
+plt.hist(x1, **kwargs)
+plt.hist2(x2, **kwargs)
+plt.hist3(x3, **kwargs)
+```
+
+<img src="./static/images/hist2.png" width = "400px"/>
+
+If you have no need to visualize your data, but still want to bin it, you can use the numpy function `np.histogram()`
+
+``` Python
+counts, edges = np.histogram(data, bins = 5)
+```
+
+## Two-Dimensional Histograms and Binnings
+
+If we can create histograms in one dimension by diving the number line in to bins, we can create two dimensional histograms by dividing the data in two dimensional bins. Let start explaining this with a multivariate normal distribution.
+
+### `plt.hist2d()`
+
+``` Python
+# defining multivariate normal distribution
+mean = [0,0]
+cov = [[1,1], [1,2]]
+x, y = np.random.multivariate_normal(mean, cov, 10000).T
+
+plt.hist2d(x, y, bins = 30, cmap = 'Blues')
+cb = plt.colorbar()
+cb.set_label('counts in bin')
+```
+
+< img src="./static/images/hist3.png" width = "400px"/>
+
+### `plt.hexbin()`
+
+We can also plot this using, not squared bins, but hexagons!
+
+``` Python
+plt.hexbin(x, y, gridsize = 30, cmap = 'Blues')
+cb = plt.colorbar()
+cb.set_label('counts in bin')
+```
+
+<img src=".static/images/hist4.png" width = "400px"/>
+
+### `Kernel density estimation`
+
+Another common method of evaluating densities in multiple dimensions is kernel density estimation (KDE).
+
+``` Python
+from scipy.stats import gaussian_kde
+
+# fit an array of siz´[Ndim, Nsamples]
+data = np.vstack([x,y])
+kde = gaussian_kde(data)
+
+# evaluate a regular grid
+xgrid = np.linspace(-3.5, 3.5, 40)
+ygrid = np.linspace(-6, 6, 40)
+
+Xgrid, Ygrid = np.meshgrid(xgrid, ygrid)
+Z = kde.evaluate(np.vstack([Xgrid.ravel(), Ygrid.ravel()]))
+
+# Plot the result as an image
+plt.imshow(Z.reshape(Xgrid.shape), origin = 'lower', aspect = 'auto',
+    extent = '[-3.5, 3.5, -6, 6]', cmap ='Blues')
+
+cb = plt.colorbar()
+cb.set_label("density")
+```
+
+<img src="./static/images/hist5.png" width = "400pc"/>
+
+## Customizing Plot Legends
+
+blz 249 
