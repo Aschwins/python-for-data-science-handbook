@@ -366,7 +366,7 @@ cb = plt.colorbar()
 cb.set_label('counts in bin')
 ```
 
-<img src=".static/images/hist4.png" width = "400px"/>
+<img src="./static/images/hist4.png" width = "400px"/>
 
 ### `Kernel density estimation`
 
