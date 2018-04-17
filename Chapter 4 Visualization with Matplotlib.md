@@ -471,3 +471,6 @@ plt.title('California Cities: Area and Population')
 Creating this awesomeness:
 
 <img src="./static/images/legend6.png", width = "400px"/>
+
+
+hujh
