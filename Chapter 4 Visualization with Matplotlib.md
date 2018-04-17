@@ -443,6 +443,8 @@ plt.legend(lines[:2], ['first', 'second'])
 ```
 <img src="./static/images/legend4.png" width = "400px"/>
 
+### Legend for size of points
+
 While all these kind of legends are super great, what shows in your legend is still dependent on what shows in your graph. Now what if we want to have a legend with certain predefined objects? Like the size of a circle projects the size of the area of a city for example? How can we create a legend of that without having to show every circle size there is? Well, by creating an invisible plot! And making a legend from that plot:
 
 ``` Python
@@ -472,5 +474,28 @@ Creating this awesomeness:
 
 <img src="./static/images/legend6.png" width = "400px"/>
 
+### Multiple legends
 
-hujh
+Now matplotlib doesn't allow multiple legends in an ordinary fashion. If you input a new legend in the regular way, it will overwrite the last one. But there is always a way. We can create a second legend by using the `add_artist()`
+
+``` python
+fig, ax = plt.subplots()
+lines = []
+x = np.linspace(0, 10, 1000)
+styles = ['-', '--', '-.', ':']
+
+for i in range(4):
+  lines += ax.plot(x, np.sin(x - i * np.sin(x) / 2), styles[i], color = 'black')
+
+plt.axis('equal')
+
+ax.legend(lines[:2], ['Line A', 'Line B'], loc = 'upper right', frameon = False)
+
+import Legend from matplotlib
+leg = Legend(ax, lines[2:], ['Line C', 'Line D'], loc = 'lower right', frameon = False)
+ax.add_artist(leg)
+```
+
+<img src="./static/images/legend5.png" width = "400px"/>
+
+## Customizing Colorbars
