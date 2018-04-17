@@ -398,4 +398,76 @@ cb.set_label("density")
 
 ## Customizing Plot Legends
 
-blz 249
+We already seen how to add a plot legend to a figure. For example like this:
+
+``` Python
+x = np.linspace(0,10,1000)
+fig, ax = plt.subplots()
+
+ax.plot(x, np.sin(x), '-b', label = 'Sine')
+ax.plot(x, np.cos(x), '--r', label = 'Cosine')
+
+ax.axis('equal')
+leg = ax.legend()
+
+# Removing the frame and moving it to the upper left corner
+ax.legend(frameon = False, loc = 'upper left')
+```
+
+<img src="./static/images/legend1.png", width = "400px"/>
+
+But there are several ways to alter this legend of course. In the above example we've removed the frame and shuffed it in the upper left corner. Or we can move it somewhere else and ad a new columns to our legend!
+
+``` Python
+ax.legend(frameon = False, loc = 'lower center', ncol = 2)
+```
+<img src="./static/images/legend2.png", width = "400px"/>
+
+Or we can add a fancy ass box with:
+
+``` Python
+ax.legend(fancybox = True, framealpha = 1, shadow = True, borderpad = 1)
+```
+
+<img src="./static/images/legend3.png", width = "400px"/>
+
+To specify what you want to show, just create a plot with a variable and specify like this:
+
+``` Python
+x = np.linspace(0,10,10000)
+y = np.sin(x[:, np.newaxis] + np.pi * np.arange(0,2,0.5))
+lines = plt.plot(x,y)
+
+# the legend:
+plt.legend(lines[:2], ['first', 'second'])
+```
+<img src="./static/images/legend4.png", width = "400px"/>
+
+While all these kind of legends are super great, what shows in your legend is still dependent on what shows in your graph. Now what if we want to have a legend with certain predefined objects? Like the size of a circle projects the size of the area of a city for example? How can we create a legend of that without having to show every circle size there is? Well, by creating an invisible plot! And making a legend from that plot:
+
+``` Python
+cities = pd.read_csv('data/california_cities.csv')
+# Extract the data we're interested in
+lat, lon = cities['latd'], cities['longd']
+population, area = cities['population_total'], cities['area_total_km2']
+# Scatter the points, using size and color but no label
+plt.scatter(lon, lat, label=None,
+                  c=np.log10(population), cmap='viridis',
+                  s=area, linewidth=0, alpha=0.5)
+plt.axis(aspect='equal')
+plt.xlabel('longitude')
+plt.ylabel('latitude')
+plt.colorbar(label='log$_{10}$(population)')
+plt.clim(3, 7)
+# Here we create a legend:
+# we'll plot empty lists with the desired size and label for area in [100, 300, 500]:
+plt.scatter([], [], c='k', alpha=0.3, s=area,
+                  label=str(area) + ' km$^2$')
+plt.legend(scatterpoints=1, frameon=False,
+                  labelspacing=1, title='City Area')
+plt.title('California Cities: Area and Population')
+```
+
+Creating this awesomeness:
+
+<img src="./static/images/legend6.png", width = "400px"/>
