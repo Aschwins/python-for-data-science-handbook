@@ -414,14 +414,14 @@ leg = ax.legend()
 ax.legend(frameon = False, loc = 'upper left')
 ```
 
-<img src="./static/images/legend1.png", width = "400px"/>
+<img src="./static/images/legend1.png" width = "400px"/>
 
 But there are several ways to alter this legend of course. In the above example we've removed the frame and shuffed it in the upper left corner. Or we can move it somewhere else and ad a new columns to our legend!
 
 ``` Python
 ax.legend(frameon = False, loc = 'lower center', ncol = 2)
 ```
-<img src="./static/images/legend2.png", width = "400px"/>
+<img src="./static/images/legend2.png" width = "400px"/>
 
 Or we can add a fancy ass box with:
 
@@ -429,7 +429,7 @@ Or we can add a fancy ass box with:
 ax.legend(fancybox = True, framealpha = 1, shadow = True, borderpad = 1)
 ```
 
-<img src="./static/images/legend3.png", width = "400px"/>
+<img src="./static/images/legend3.png" width = "400px"/>
 
 To specify what you want to show, just create a plot with a variable and specify like this:
 
@@ -441,7 +441,7 @@ lines = plt.plot(x,y)
 # the legend:
 plt.legend(lines[:2], ['first', 'second'])
 ```
-<img src="./static/images/legend4.png", width = "400px"/>
+<img src="./static/images/legend4.png" width = "400px"/>
 
 While all these kind of legends are super great, what shows in your legend is still dependent on what shows in your graph. Now what if we want to have a legend with certain predefined objects? Like the size of a circle projects the size of the area of a city for example? How can we create a legend of that without having to show every circle size there is? Well, by creating an invisible plot! And making a legend from that plot:
 
@@ -470,7 +470,7 @@ plt.title('California Cities: Area and Population')
 
 Creating this awesomeness:
 
-<img src="./static/images/legend6.png", width = "400px"/>
+<img src="./static/images/legend6.png" width = "400px"/>
 
 
 hujh
