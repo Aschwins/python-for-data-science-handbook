@@ -582,7 +582,7 @@ iso = Isomap(n_components = 2)
 projection = iso.fit_transform(digits.data)
 ```
 
-Projecting 68 dimensional data on 2 dimensions. 
+Projecting 68 dimensional data on 2 dimensions.
 
 ``` Python
 plt.scatter(projection[:, 0], projection[:, 1], lw=0.1, c=digits.target, cmap=plt.cm.get_cmap('cubehelix', 6))
@@ -591,3 +591,5 @@ plt.clim(-0.5, 5.5)
 ```
 
 <img src="./static/images/colorbar6.png" width = "400px"/>
+
+262
