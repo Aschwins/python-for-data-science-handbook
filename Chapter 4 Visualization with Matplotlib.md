@@ -521,4 +521,73 @@ plt.colorbar()
 
 <img src="./static/images/colorbar2.png" width="400px"/>
 
-Great stuff! Now there are alot of other colormaps besides these two. Try `plt.cm.<TAB>` to see them all. What color to choose to make your plot is dependent on a lot of things. Two fun articles with some great thoughts about coloring graphs are: !(http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003833)[Ten Simple Rules for Better Figures] or matplotlibs way of choosing colormaps: !(https://matplotlib.org/1.4.1/users/colormaps.html)[interesting discussion]
+Great stuff! Now there are alot of other colormaps besides these two. Try `plt.cm.<TAB>` to see them all. What color to choose to make your plot is dependent on a lot of things. Two fun articles with some great thoughts about coloring graphs are: [Ten Simple Rules for Better Figures](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003833) or matplotlibs way of choosing colormaps: [interesting discussion](https://matplotlib.org/1.4.1/users/colormaps.html)
+
+It's wise to used a dark to bright colorbar. So avoid `'jet'` or `'RdBu'`, because these colorbars are brightest in the middle. Showing them in `'gray'` will lose all information while homogeneous dark to bright bars don't have that issue.
+
+### Color limits and extensions
+
+Let's add some noise to the data.
+
+``` Python
+# make noise in 1% of the pixels
+speckles = (np.random(I.shape)< 0.01)
+I[speckles] = np.random.normal(0,3, np.count_nonzero(speckles))
+
+plt.figure(figsize(10, 3.5))
+
+plt.subplot(1,2,1)
+plt.imshow(I, cmap = 'RdBu')
+plt.colorbar()
+
+plt.subplot(1,2,2)
+plt.imshow(I, cmap = 'RdBu')
+plt.colorbar(extend = 'both')         # extend show the viewer there are more colors than shown. (colorlimit != valuelimit)
+plt.clim(-1,1)                        # set a limit so we can see!
+```
+
+<img src="./static/images/colorbar3.png" width = "400px"/>
+
+### Discrete Colorbars
+
+Above colorbars are all discrete, but sometimes it's alot clearer to define levels. Making a colormap discrete is done by calling the colormap with `plt.cm.get_cmap('Blues', 6)`.
+
+``` Python
+plt.imshow(I, cmap = plt.cm.get_cmap('Blues', 6))
+plt.colorbar()
+plt.clim(-1,1)
+```
+
+<img src="./static/images/colorbar4.png" width = "400px"/>
+
+### Example: Handwritten Digits
+
+A supercool example of using a colormap in practice is in image recognition. Let's start of with the easiest example "The Handwritten Digits" dataset. This dataset contains data in the form of arrays. These array represent a handwritten number by a number in 64 x 64 grid. Higher numbers are darker pixels, lower numbers are brighter pixels and 0 is white. Plotting all numbers with there 64 dimension can be a challenge, but we'll use a manifold to try it anyway.
+
+``` Python
+from sklearn.datasets import load_digits
+digits = load_digits(n_class = 6)
+
+fig, ax = plt.subplots(8,8, figsize = (6,6))
+for i, axi in enumerate(ax.flat):
+  axi.imshow(digits.images[i], cmap = 'binary')
+  axi.set(xticks=[], yticks=[])
+```
+
+<img src="./static/images/colorbar5.png" width = "400px"/>
+
+``` python
+from sklearn.manifold import Isomap
+iso = Isomap(n_components = 2)
+projection = iso.fit_transform(digits.data)
+```
+
+Projecting 68 dimensional data on 2 dimensions. 
+
+``` Python
+plt.scatter(projection[:, 0], projection[:, 1], lw=0.1, c=digits.target, cmap=plt.cm.get_cmap('cubehelix', 6))
+plt.colorbar(ticks=range(6), label = 'digit value')
+plt.clim(-0.5, 5.5)
+```
+
+<img src="./static/images/colorbar6.png" width = "400px"/>
