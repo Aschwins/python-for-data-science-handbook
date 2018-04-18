@@ -499,3 +499,26 @@ ax.add_artist(leg)
 <img src="./static/images/legend5.png" width = "400px"/>
 
 ## Customizing Colorbars
+
+Colorbars and colormaps are used for plotting legends and data with continous difference. Often adding a clear third dimension in a two-dimensional plot. Let's start of with an easy colorbar.
+
+``` Python
+x = np.linspace(0, 10, 1000)
+I = np.sin(x) * np.cos(x[:, np.newaxis])
+
+plt.imshow(I)
+plt.colorbar()
+```
+
+<img src="./static/images/colorbar1.png" width = "400px"/>
+
+But we can make it gray!
+
+``` Python
+plt.imshow(I, cmap = 'gray')
+plt.colorbar()
+```
+
+<img src="./static/images/colorbar2.png" width="400px"/>
+
+Great stuff! Now there are alot of other colormaps besides these two. Try `plt.cm.<TAB>` to see them all. What color to choose to make your plot is dependent on a lot of things. Two fun articles with some great thoughts about coloring graphs are: !(http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003833)[Ten Simple Rules for Better Figures] or matplotlibs way of choosing colormaps: !(https://matplotlib.org/1.4.1/users/colormaps.html)[interesting discussion]
