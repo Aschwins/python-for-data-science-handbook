@@ -618,3 +618,40 @@ ax2.plot(np.cos(x))
 
 ```
 <img src="./static/images/subplots1.png" width = "400px"/>
+
+### Simple Grids of Subplots
+
+A Simple grid can be made, once again with `plt.subplot(xgrid, ygrid, position)`. Let's show a small example.
+
+``` Python
+for i in range(1,7):
+  plt.subplot(2,3,i)
+  plt.text(0.5, 0.5, str((2,3,i)), fontsize =18, ha='center')
+```
+
+Where `plt.text(x,y,s,f,ha)` has x-input, y-input, a string, the fontsize and the horizontal alignment as input. Producting:
+
+<img src="./static/images/subplots2.png" width = "400px" />
+
+One can alter the width between the images with
+
+``` Python
+fig = plt.figure()
+fig.subplots_adjust(hspace = 0.4, wspace = 0.4)
+
+for i in range(1,7):
+  plt.subplot(2,3,i)
+  plt.text(0.5, 0.5, str((2,3,i)), fontsize =18, ha='center')
+```
+
+### `plt.subplots()`: The Whole Grid in One Go
+
+``` Python
+fig, ax = plt.subplots(2,3, sharex = 'col', sharey = 'row')
+
+for i in range(2):
+  for j in range(2):
+    ax[i,j].text(0.5,0.5,str((i,j)),fontsize = 16, ha = 'center' )
+```
+
+Here we use the function `plt.subplots()` with arguments `sharex = 'col'` and `sharey = 'row'`, which specifies that plots among the columns can share the x axis, and among the rows they can share the y axis.
