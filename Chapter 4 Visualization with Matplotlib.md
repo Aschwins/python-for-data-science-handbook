@@ -592,4 +592,29 @@ plt.clim(-0.5, 5.5)
 
 <img src="./static/images/colorbar6.png" width = "400px"/>
 
-262
+## Multiple Subplots
+
+Having multiple plots in one figure is awesome, and we've already seen a way to do this with `plt.subplots(1,2,1)`. This way you're only able to split your axis, but maybe you want some more options. Putting a graph in the top right for example!?
+
+``` Python
+ax1 = plt.axes()
+ax2 = plt.axes([0.65, 0.65, 0.2, 0.2])
+```
+
+<img src="./static/images/subplots0.png" width = "400px"/>
+
+The key thing to remember is, one can define their own axes with `plt.axes([l, b, w, h])`. Remember: Left, Bottom, Width, Height!
+
+This can be used to have two graphs kiss eachother at the top and bottom.
+
+``` Python
+fig = plt.figure()
+ax1 = fig.axes([0.1,0.1,0.8,0.4], xticks =[], ylim = (-1.2,1.2))
+ax2 = fig.axes([0.1,0.5,0.8,0.4], ylim = (-1.2,1.2))
+
+x = np.linspace(0,10)
+ax1.plot(np.sin(x))
+ax2.plot(np.cos(x))
+
+```
+<img src="./static/images/subplots1.png" width = "400px"/>
