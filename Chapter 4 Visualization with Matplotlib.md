@@ -653,5 +653,47 @@ for i in range(2):
   for j in range(2):
     ax[i,j].text(0.5,0.5,str((i,j)),fontsize = 16, ha = 'center' )
 ```
+<img src="./static/images/subplots3.png" width = "400px" />
 
 Here we use the function `plt.subplots()` with arguments `sharex = 'col'` and `sharey = 'row'`, which specifies that plots among the columns can share the x axis, and among the rows they can share the y axis.
+
+### `plt.GridSpec()`
+
+Now with `plt.subplots()` one can create multiple subplots in a figure in one go. But these subplots are all the same size. We can define different sized subplots in the same figure by defining a grid with `plt.GridSpec()`
+
+``` Python
+# Defining the grid
+grid = plt.GridSpec(2,3, wpace = 0.3, hspace = 0.3) #gridsize (2,3)
+
+# Plotting on the grid
+plt.subplot(grid[0,0])
+plt.subplot(grid[0,1:])
+
+plt.subplot(grid[1, :-1])
+plt.subplot(grid[1, -1])
+```
+
+<img src="./static/images/subplots5.png" width = "400px" />
+
+Bringing al of this together we can create triple histogram plots. Which are quite common and even included in seaborn.
+
+``` Python
+mean = [0,0]
+cov = [[1,1],[1,2]]
+
+x, y = np.random.multivariate_normal(mean, cov, 3000).T
+
+grid = plt.GridSpec(4,4, wspace = 0.2, hspace = 0.2)
+
+main_ax = plt.subplot(grid[:-1, 1:])
+y_hist = plt.subplot(grid[:-1, 0], xticklabels =[], sharey = main_ax)
+x_hist = plt.subplot(grid[-1, 1:], yticklabels = [], sharex = main_ax)
+
+main_ax.plot(x,y, 'ok', markersize = 3, alpha = 0.2)
+x_hist.hist(x, 40, histtype = 'stepfilled', orientation = 'vertical', color = 'gray')
+y_hist.hist(y, 40, histtype = 'stepfilled', orientation = 'horizontal', color ='gray')
+
+x_hist.invert_yaxis()
+y_hist.invert_xaxis()
+```
+<img src="./static/images/subplots4.png" width = "400px" />
