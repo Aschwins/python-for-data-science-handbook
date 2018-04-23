@@ -189,6 +189,8 @@ markeredgewidth = '2'
 )
 ```
 
+<img src="./static/images/marker1.png" width="400px" />
+
 ### Scatter Plots with plt.scatter
 
 ``` Python
@@ -203,24 +205,28 @@ x = rng.randn(100)
 y = rng.randn(100)
 
 sizes = 1000 * rng.rand(100)
-colors = rang.rand(100)
+colors = rng.rand(100)
 
 plt.scatter(x, y, c = colors, s = sizes, alpha = 0.3, cmap = 'viridis')
 plt.colorbar()
 ```
 
+<img src="./static/images/marker2.png" width="400px" />
+
 ``` Python
-from sklearn.dataset import load_iris
+from sklearn.datasets import load_iris
 iris = load_iris()
 
 features = iris.data.T
 
 plt.scatter(features[0], features[1], alpha = 0.2,
-s=100 * features[3], color = iris.target, cmap='viridis',
+s=100 * features[3], c = iris.target, cmap='viridis')
 plt.xlabel(iris.feature_names[0])
-plt.ylabel(iris.feature_names[1]))
+plt.ylabel(iris.feature_names[1])
 
 ```
+
+<img src="./static/images/marker3.png" width="400px" />
 
 ## Visualizing Errors
 
@@ -758,3 +764,5 @@ ax.set_ylim(-6, 6)
 <img src="./static/images/text2.png" width="400px" />
 
 <img src="./static/images/text3.png" width="400px" />
+
+blz 272
