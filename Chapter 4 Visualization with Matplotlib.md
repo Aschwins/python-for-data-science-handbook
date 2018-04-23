@@ -696,4 +696,65 @@ y_hist.hist(y, 40, histtype = 'stepfilled', orientation = 'horizontal', color ='
 x_hist.invert_yaxis()
 y_hist.invert_xaxis()
 ```
+
 <img src="./static/images/subplots4.png" width = "400px" />
+
+## Text and Annotation
+
+In this section we'll explain how to add text and annotations to your plot. We'll revisit an old plot we've seen before, the births in the USA dataset.
+
+``` Python
+births = pd.read_csv('./static/data/births.csv')
+quartiles = np.percentile(births['births'], [25, 50, 75])
+mu, sig = quartiles[1], 0.74 * (quartiles[2] - quartiles[0])
+births = births.query('(births > @mu - 5 * @sig) & (births < @mu + 5 * @sig)')
+births['day'] = births['day'].astype(int)
+births.index = pd.to_datetime(10000 * births.year + 100 * births.month + births.day, format='%Y%m%d')
+births_by_date = births.pivot_table('births', [births.index.month, births.index.day])
+births_by_date.index = [pd.datetime(2012, month, day)
+
+for (month, day) in births_by_date.index] In[3]: fig, ax = plt.subplots(figsize=(12, 4))
+           births_by_date.plot(ax=ax);
+
+# Add labels to the plot
+style = dict(size=10, color='gray')
+ax.text('2012-1-1', 3950, "New Year's Day", **style)
+ax.text('2012-7-4', 4250, "Independence Day", ha='center', **style)
+ax.text('2012-9-4', 4850, "Labor Day", ha='center', **style)
+ax.text('2012-10-31', 4600, "Halloween", ha='right', **style)
+ax.text('2012-11-25', 4450, "Thanksgiving", ha='center', **style)
+ax.text('2012-12-25', 3850, "Christmas ", ha='right', **style)
+
+# Label the axes
+ax.set(title='USA births by day of year (1969-1988)',
+      ylabel='average daily births')
+
+# Format the x axis with centered month labels
+ax.xaxis.set_major_locator(mpl.dates.MonthLocator())
+ax.xaxis.set_minor_locator(mpl.dates.MonthLocator(bymonthday=15))
+ax.xaxis.set_major_formatter(plt.NullFormatter())
+ax.xaxis.set_minor_formatter(mpl.dates.DateFormatter('%h'));
+```
+
+<img src="./static/images/text1.png" width="400px" />
+
+### Transforms and Text position
+
+There's a small subtilty in the way text annotations work. It takes the locations given in a certain graph (x, y) figure or axes and transforms them to the real figure on your screen. This is all under the hood, but in the future it might be convenient to know about it, if you want to add some rogue text on the boundary of a figure. Just specify what tranformation you want in `.text(transform = ax.transData)` or:
+
+``` Python
+fig, ax = plt.subplots(facecolor = 'lightgray')
+
+# transform=ax.transData is the default, but we'll specify it anyway
+ax.text(1, 5, ". Data: (1, 5)", transform=ax.transData)
+ax.text(0.5, 0.1, ". Axes: (0.5, 0.1)", transform=ax.transAxes)
+ax.text(0.2, 0.2, ". Figure: (0.2, 0.2)", transform=fig.transFigure);
+
+# the shift to the second plot
+ax.set_xlim(0, 2)
+ax.set_ylim(-6, 6)
+```
+
+<img src="./static/images/text2.png" width="400px" />
+
+<img src="./static/images/text3.png" width="400px" />
