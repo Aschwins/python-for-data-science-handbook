@@ -260,8 +260,10 @@ dyfit = 2 * np.sqrt(MSE)
 plt.plot(xdata, ydata, 'or')
 plt.plot(xfit, yfit, '-', color = 'gray')
 
-plt.fill_between(xfit, yfit-dy, yfit+dy, color = 'lightgray', alpha = 0.2)
+plt.fill_between(xfit, yfit-dyfit, yfit+dyfit, color = 'lightgray', alpha = 0.2)
 ```
+
+<img src="./static/images/gaus1.png" width="800px" />
 
 ## Visualizing three dimensional data
 
