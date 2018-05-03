@@ -263,7 +263,7 @@ plt.plot(xfit, yfit, '-', color = 'gray')
 plt.fill_between(xfit, yfit-dyfit, yfit+dyfit, color = 'lightgray', alpha = 0.2)
 ```
 
-<img src="./static/images/gaus1.png" width="800px" />
+<img src="./static/images/gaus1.png" width="400px" />
 
 ## Visualizing three dimensional data
 
@@ -288,11 +288,15 @@ plt.contourf(X, Y, Z, 50, cmap = 'RdGy')
 
 ```
 
+<img src="./static/images/contour1.png" width="400px" />
+
 `plt.contour` and `plt.contourf` are great, but we can also visualize it a third way with `plt.imshow`. Here we can call a function and plot it on a surface.
 
 ``` Python
 plt.imshow(Z, extent=[0,5,0,5], origin = 'lower', cmap = 'RdGy')
 ```
+
+<img src="./static/images/contour2.png" width="400px" />
 
 Where extent defines the grid and origin defines a regular x, y grid.
 
