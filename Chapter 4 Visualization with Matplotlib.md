@@ -843,3 +843,42 @@ ax.set_ylim(3600, 5400);
 ```
 
 <img src="./static/images/arrow2.png" width="800px" />
+
+More customisations can be found on http://matplotlib.org/examples/pylab_examples/annotation_demo2.html.
+
+## Customising ticks
+
+All plots have axis, and axis have ticks. We can show these ticks and labels on these ticks or not. In this section we'll explore how to customise your ticks! First let's show how to remove them using `NullLocator()` and `NullFormatter()`
+
+``` python
+ax = plt.axes()
+ax.plot(np.random.randn(50))
+
+ax.yaxis.set_major_locator(plt.NullLocator())
+ax.xaxis.set_major_formatter(plt.NullFormatter())
+```
+
+<img src="./static/images/ticks1.png" width="400px" />
+
+Notice how the y-ticks and y-labels are entirely removed by `_locator` and `plt.NullLocator()`, and the x-ticks remain while the x-labels get removed with `_formatter` and `plt.NullFormatter()`.
+
+Now sometimes it's very usefull to remove everything all together when dealing with images for example.
+
+``` python
+from sklearn.datasets import fetch_olivetti_faces
+faces = fetch_olivetti_faces().images
+
+fig, ax = plt.subplots(5,5, figsize = (5,5))
+fig.subplots_adjust(hspace = 0, wspace = 0)
+
+for i in range(5):
+  for j in range(5):
+    ax[i, j].xaxis.set_major_locator(plt.NullLocator())
+    ax[i, j].yaxis.set_major_locator(plt.NullLocator())
+    ax[i, j].imshow(face[10*i + j], cmap = "bone")
+```
+
+Here we've used another sklearn dataset containing greyscale matrices which represent images of faces. With just a small piece of code we can create a grid of faces without ticks, labels or other nonsense.
+
+
+<img src="./static/images/ticks2.png" width="400px" />
