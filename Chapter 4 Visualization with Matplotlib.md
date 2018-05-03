@@ -880,5 +880,50 @@ for i in range(5):
 
 Here we've used another sklearn dataset containing greyscale matrices which represent images of faces. With just a small piece of code we can create a grid of faces without ticks, labels or other nonsense.
 
-
 <img src="./static/images/ticks2.png" width="400px" />
+
+If you want to specify how many ticks your plot has to show use `plt.MaxNLocator(N)`
+
+``` python
+fig, ax = plt.subplots(4,4, sharex = True, sharey = True)
+for axi in ax.flat:
+  axi.xaxis.set_major_locator(plt.MaxNLocator(3))
+  axi.yaxis.set_major_locator(plt.MaxNLocator(3))
+```
+
+<img src="./static/images/ticks3.png" width="400px" />
+
+## Fancy Tick Formats
+
+While locator is for the location of the ticks formatter is for what the ticks look like. This has lot's of option, but you're even able to define your own formats with `plt.FuncFormatter()`.
+
+``` python
+fig, ax = plt.subplots()
+x = np.linspace(0, 3 * np.pi, 5000)
+
+ax.plot(x, np.sin(x), lw = 3, label = 'Sine')
+ax.plot(x, np.cos(x), lw = 3, label = 'Cosine')
+
+ax.grid(True)
+ax.axis('equal')
+ax.legend(frameon = False)
+
+ax.set_xlim(0, 3 * np.pi)
+ax.xaxis.set_major_locator(plt.MultipleLocator(np.pi/2))
+ax.xaxis.set_minor_locator(plt.MultipleLocator(np.pi/4))
+
+def format_func(value, tick_number):
+  N = int(np.round(2 * value / np.pi))
+  if N == 0:
+    return 0
+  elif N == 1:
+    return "$\pi/2$"
+  elif N == 2:
+    return "$\pi$"
+  elif N % 2 > 0:
+    return "${0}\pi/2$".format(N)
+  else:
+    return "${0}\pi$".format(N // 2)
+```
+
+<img src="./static/images/ticks4.png" width="400px" />
