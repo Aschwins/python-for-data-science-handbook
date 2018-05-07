@@ -927,3 +927,107 @@ def format_func(value, tick_number):
 ```
 
 <img src="./static/images/ticks4.png" width="400px" />
+
+## Summary of Formatters and Locators
+
+
+|Locator Class|Description|
+|---|---|
+|FixedLocator|Tick locations are fixed|
+|IndexLocator|Locator for index plots (e.g. where x = range(len(y)))
+|LinearLocator|Evenly spaced ticks from min to max|
+|LogLocator|Logarithmically ticks from min to max|
+|MultipleLocator|Ticks and range are a multiple of base|
+MaxNLocator|Finds up to max number of ticks at nice locations"
+|AutoLocator|(Default) MaxNLocator with simple defaults|
+|AutoMinorLocator|Locator for minor ticks|
+
+|Formatter class|Description|
+|---|---|
+|NullFormatter|No labels on the ticks|
+|IndexFormatter|Set the strings from a list of labels|
+|FixedFormatter|Set the strings manually for the labels|
+|FuncFormatter|User-defined function sets the labels|
+|FormatStrFormatter|Use a format string for each value|
+|ScalarFormatter|(Default) Formatter for scalar values|
+|LogFormatter|Default formatter for log axes|
+
+## Customizing Matplotlib: Configurations and Stylesheets
+
+In this section we'll explore sevaral ways to configure and customize matplotlib's styles and runtime configurations.
+
+### Plot Customization by Hand
+
+Let start of with a simple histogram in the matplotlib basic style.
+
+``` python
+plt.style.use('classic')
+x = np.random.randn(1000)
+
+plt.hist(x)
+```
+
+<img src="./static/images/custom1.png" width="400px" />
+
+Now if you think this looks wack, you're up for a treat, because everything can be customized! Let's take a look at some of the settings.
+
+``` python
+# use a gray background
+ax = plt.axes(axisbg='#E6E6E6')
+ax.set_axisbelow(True)
+
+# draw solid white grid lines
+plt.grid(color='w', linestyle='solid')
+
+# hide axis spines
+for spine in ax.spines.values(): spine.set_visible(False)
+
+# hide top and right ticks
+ax.xaxis.tick_bottom()
+ax.yaxis.tick_left()
+
+# lighten ticks and labels
+ax.tick_params(colors='gray', direction='out') for tick in ax.get_xticklabels():
+tick.set_color('gray')
+for tick in ax.get_yticklabels():
+tick.set_color('gray')
+
+# control face and edge color of histogram
+ax.hist(x, edgecolor='#E6E6E6', color='#EE6666');
+```
+
+<img src="./static/images/custom2.png" width="400px" />
+
+As one can see, it creates a plot very similiar to the ggplot style in R. Now setting up all these options every time one wants to plot some data is a pain in the ...
+
+So changing the runtime configuration (rc) is a better option! This will remember plot settings for all plots. First we'll copy the current rc settings.
+
+``` python
+IPython_default = plt.rcParams.copy()
+```
+
+Now we can use the plt.rc function to change some of these settings.
+
+``` python
+from matplotlib import cycler colors = cycler('color',
+                           ['#EE6666', '#3388BB', '#9988DD',
+                            '#EECC55', '#88BB44', '#FFBBBB'])
+plt.rc('axes', facecolor='#E6E6E6', edgecolor='none',
+                  axisbelow=True, grid=True, prop_cycle=colors)
+plt.rc('grid', color='w', linestyle='solid')
+plt.rc('xtick', direction='out', color='gray')
+plt.rc('ytick', direction='out', color='gray')
+plt.rc('patch', edgecolor='#E6E6E6')
+plt.rc('lines', linewidth=2)
+
+for i in range(4):
+  plt.plot(np.random.rand(10))
+```
+
+<img src="./static/images/custom3.png" width="400px" />
+
+Above settings can be saved in a .matplotlibrc file, so it can be called on when necessary. The easy way is to use the stylesheets instead.
+
+### Stylesheets
+
+286
