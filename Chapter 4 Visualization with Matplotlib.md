@@ -1030,4 +1030,56 @@ Above settings can be saved in a .matplotlibrc file, so it can be called on when
 
 ### Stylesheets
 
-286
+A lot easier is using one of the predefined stylesheets that come with the matplotlib library. One can ask what styles are available with `plt.style.available` and set new styles with `plt.style.use('stylename')`. This sets the style for the entire session, if you only want to set the style for one plot use `plt.style.context()`:
+
+``` python
+def hist_and_lines():
+  np.random.seed(0)
+  fig, ax = plt.subplots(1, 2, figsize=(11, 4)) ax[0].hist(np.random.randn(1000))
+  for i in range(3):
+    ax[1].plot(np.random.rand(10))
+    ax[1].legend(['a', 'b', 'c'], loc='lower left')
+```
+
+``` python
+with plt.style.context('dark_background'):
+  make_a_plot()
+```
+
+<img src="./static/images/style1.png" width="800px" />
+
+## Three-Dimensional Plotting in Matplotlib
+
+`from mpl_toolkits import mplot3d` sets the option to use the keyword `projection = '3d'` which will make a regular plot 3d.
+
+``` python
+fig = plt.figure()
+ax = plt.axes(projection = '3d')
+```
+
+<img src="./static/images/3d1.png" width="400px" />
+
+Using `%matplotlib notebook` in a notebook instead of `%matplotlib inline`, makes the plot interactive as well.
+
+### Three-Dimensional Points and Lines
+
+On a 3 dimensional figure one can call `ax.plot3D` and `ax.scatter3D` which are very familiar functions. We've seen these before just ad `3D` behind it.
+
+``` python
+fig = plt.figure()
+ax = plt.axes(projection = '3d')
+
+# Data for a three-dimensional line
+zline = np.linspace(0,15, 1000)
+xline = np.cos(zline)
+yline = np.sin(zline)
+ax.plot3D(xline, yline, zline, 'gray')
+
+# Data for three-dimensional scattered points
+zdata = 15 * np.random.rand(100)
+xdata = np.cos(zdata) + 0.1 * np.random.randn(100)
+ydata = np.sin(zdata) + 0.1 * np.random.randn(100)
+ax.scatter(xdata, ydata, zdata, c = zdata, cmap ='Greens')
+```
+
+<img src="./static/images/3d2.png" width="400px" />
