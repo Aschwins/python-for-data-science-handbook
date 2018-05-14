@@ -1086,18 +1086,114 @@ ax.scatter(xdata, ydata, zdata, c = zdata, cmap ='Greens')
 
 ### Three -Dimensional Contour Plots
 
+We've already seen 3dimensional data being plotted in a 2dimensional plot. Now we have acces to three dimensional plots, so lets plot some 3dimensional data in a 3dimensional contour plot!
+
+``` python
+def f(x,y):
+  return np.sin(np.sqrt(x **2 + y ** 2))
+
+x = np.linspace(-6, 6, 30)
+y = np.linspace(-6, 6, 30)
+
+X, Y = np.meshgrid(x, y)
+Z = f(X, Y)
+
+fig = plt.figure()
+ax = plt.axes(projection = '3d')
+ax.contour3D(X,Y,Z, 50, cmap = 'binary')
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+ax.set_zlabel('z')
+```
+
+Creating a boring black and white contour plot.
+
 <img src="./static/images/3d3.png" width="400px" />
 
-wireframe:
+What's actually happening under the hood, is that a wireframe is created and all polygons are colored. We can show the wireframe as follows:
+
+``` python
+fig = plt.figure()
+ax = plt.axes(projection = '3d')
+
+ax.plot_wireframe(X,Y,Z, color = 'black')
+ax.set_title('wireframe')
+```
 
 <img src="./static/images/3d4.png" width="400px" />
 
+Now with pretty colors!
+
+``` python
+fig = plt.figure()
+ax = plt.axes(projection = '3d')
+
+ax.plot_surface(X,Y,Z, rstride = 1, cstride=1, cmap = 'viridis', edgecolor = 'none')
+ax.set_title('surface')
+```
+
 <img src="./static/images/3d5.png" width="400px" />
+
+Or with polar coordinates:
+
+``` python
+r = np.linspace(0, 6, 20)
+theta = np.linspace(-0.9 * np.pi, 0.8 * np.pi, 40)
+r, theta = np.meshgrid(r, theta)
+
+X = r * np.sin(theta)
+Y = r * np.cos(theta)
+Z = f(X,Y)
+
+ax = plt.axes(projection='3d')
+ax.plot_surface(X, Y, Z, rstride=1, cstride=1,
+                            cmap='viridis', edgecolor='none');
+```
 
 <img src="./static/images/3d6.png" width="400px" />
 
+With surfcace Triangulations:
+
+``` python
+theta = 2 * np.pi * np.random.random(1000)
+r = 6 * np.random.random(1000)
+x = np.ravel(r * np.sin(theta))
+y = np.ravel(r * np.cos(theta))
+z=f(x,y)
+
+ax = plt.axes(projection='3d')
+ax.scatter(x, y, z, c=z, cmap='viridis', linewidth=0.5);
+```
+
 <img src="./static/images/3d7.png" width="400px" />
 
+``` python
+ax = plt.axes(projection='3d')
+ax.plot_trisurf(x, y, z, cmap='viridis', edgecolor='none');
+```
+
 <img src="./static/images/3d8.png" width="400px" />
+
+See the relief? Now let's 3d plot an awesome mobius strip.
+
+``` python
+theta = np.linspace(0, 2 * np.pi, 30)
+            w = np.linspace(-0.25, 0.25, 8)
+w, theta = np.meshgrid(w, theta)
+
+phi = 0.5 * theta
+
+# radius in x-y plane r=1+w*np.cos(phi)
+x = np.ravel(r * np.cos(theta))
+y = np.ravel(r * np.sin(theta))
+z = np.ravel(w * np.sin(phi))
+
+# triangulate in the underlying parameterization from matplotlib.tri import Triangulation
+tri = Triangulation(np.ravel(w), np.ravel(theta))
+ax = plt.axes(projection='3d')
+ax.plot_trisurf(x, y, z, triangles=tri.triangles,
+                cmap='viridis', linewidths=0.2);
+ax.set_xlim(-1, 1); ax.set_ylim(-1, 1); ax.set_zlim(-1, 1);
+```
 
 <img src="./static/images/3d9.png" width="400px" />
