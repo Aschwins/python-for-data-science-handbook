@@ -1083,3 +1083,21 @@ ax.scatter(xdata, ydata, zdata, c = zdata, cmap ='Greens')
 ```
 
 <img src="./static/images/3d2.png" width="400px" />
+
+### Three -Dimensional Contour Plots
+
+<img src="./static/images/3d3.png" width="400px" />
+
+wireframe:
+
+<img src="./static/images/3d4.png" width="400px" />
+
+<img src="./static/images/3d5.png" width="400px" />
+
+<img src="./static/images/3d6.png" width="400px" />
+
+<img src="./static/images/3d7.png" width="400px" />
+
+<img src="./static/images/3d8.png" width="400px" />
+
+<img src="./static/images/3d9.png" width="400px" />
