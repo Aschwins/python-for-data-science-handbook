@@ -1223,16 +1223,69 @@ plt.legend('ABCDEF', ncol = 2, loc = 'upper left')
 
 And let's do the same for Seaborn.
 
+``` python
+import seaborn as sns
+sns.set()
+
+plt.plot(x,y)
+plt.legend('ABCDEF', ncol = 2, loc = 'upper left')
+```
+
 <img src="./static/images/sb2.png" width="400px" />
+
+Much better, but the difference is a lot more clear when plotting bar charts for example.
+
+``` python
+data = np.random.multivariate_normal([0,0], [[5,2],[2,2]], size = 2000)
+data = pd.DataFrame(data, columns = ['x', 'y'])
+
+for col in 'xy':
+  plt.hist(data[col], normed = True, alpha = 0.5)
+```
 
 <img src="./static/images/sb3.png" width="400px" />
 
+So far these all should be very familiar with what we did so far with matplotlib. But Seaborn is a lot easier to use when one wants to make very relevant statistical plots. For example a very easy way to make a **kernel density plot** with `sns.kdeplot()`:
+
+``` python
+for col in 'xy':
+  sns.kdeplot(data[col], shade = True)
+```
+
 <img src="./static/images/sb4.png" width="400px" />
+
+Combining the above two, a histogram and a kernel density function can easily be done with `sns.distplot()`.
+
+``` python
+sns.distplot(data['x'])
+sns.distplot(data['y'])
+```
 
 <img src="./static/images/sb5.png" width="400px" />
 
+Passing the full two dimensional dataset to the kdeplot will create two dimensional representation with a contourplot.
+
+``` python
+sns.kdeplot(data)
+```
+
 <img src="./static/images/sb6.png" width="400px" />
 
+We can see the joint distribution and the marginal distributions together using `sns.joinplot()`. With only one line of code we can create plots which in matplotlib should have taken us 6 lines of creating subplots etc.
+
+
+``` python
+with sns.axes_style('white'):
+  sns.jointplot('x', 'y', data, kind = 'kde')
+```
+
 <img src="./static/images/sb7.png" width="400px" />
+
+We can also fill it hexagonally, creating a honeygrate plot!
+
+``` python
+with sns.axes_style('white'):
+  sns.jointplot('x', 'y', data, kind = 'hex')
+```
 
 <img src="./static/images/sb8.png" width="400px" />
