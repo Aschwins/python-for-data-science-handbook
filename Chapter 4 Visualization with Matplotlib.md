@@ -1197,3 +1197,42 @@ ax.set_xlim(-1, 1); ax.set_ylim(-1, 1); ax.set_zlim(-1, 1);
 ```
 
 <img src="./static/images/3d9.png" width="400px" />
+
+## Visualization with Seaborn
+
+With Matplotlibs one has a solid basis to create interesting plots, but in some ways it's quite limited to what it can do and also need a lot of code to make it do what you want. An awesome library created on matplotlib is 'Seaborn'. Seaborn is easier to use and can create beautiful dynamic plots without needing a lot of code.
+
+* Better API
+* Working with Pandas
+* Prettier and more statistical options
+
+Now let's start of by visualizing six simple random walks in matplotlib.
+
+``` python
+# Create some data
+rng = np.random.RandomState(0)
+x = np.linspace(0,10,500)
+y = np.cumsum(rng.randomn(500,6),0)
+
+# Plot the data with matplotlib defaults
+plt.plot(x,y)
+plt.legend('ABCDEF', ncol = 2, loc = 'upper left')
+```
+
+<img src="./static/images/sb1.png" width="400px" />
+
+And let's do the same for Seaborn.
+
+<img src="./static/images/sb2.png" width="400px" />
+
+<img src="./static/images/sb3.png" width="400px" />
+
+<img src="./static/images/sb4.png" width="400px" />
+
+<img src="./static/images/sb5.png" width="400px" />
+
+<img src="./static/images/sb6.png" width="400px" />
+
+<img src="./static/images/sb7.png" width="400px" />
+
+<img src="./static/images/sb8.png" width="400px" />
