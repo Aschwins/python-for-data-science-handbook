@@ -1289,3 +1289,30 @@ with sns.axes_style('white'):
 ```
 
 <img src="./static/images/sb8.png" width="400px" />
+
+### Pair plots
+
+A very usefull way of finding correlations in multidimensional data is with a pairplot. Let's try it on the iris dataset.
+
+``` python
+iris = sns.load_dataset('iris')
+sns.pairplot(iris, hue = 'species', size = 2,5) # hue is what to colorcode
+```
+
+<img src="./static/images/sb9.png" width="400px" />
+
+Now imagine making this plot in matplotlib...
+
+### Faceted Histograms
+
+Sometimes the best way to view data is via histograms of subsets of the data. `sns.FacetGrid()` is awesome for this!
+
+``` python
+tips = sns.load_dataset('tips')
+tips['tips_pct'] = 100 * tips['tip'] / tips['total_bill']
+
+grid = sns.FacetGrid(tips, row = 'sex', col = 'time', margin_titles = True)
+grid.map(plt.hist, "tip_pct", bins = np.linspace(0, 40, 15))
+```
+
+<img src="./static/images/sb10.png" width="400px" />
