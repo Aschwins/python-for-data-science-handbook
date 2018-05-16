@@ -1316,3 +1316,40 @@ grid.map(plt.hist, "tip_pct", bins = np.linspace(0, 40, 15))
 ```
 
 <img src="./static/images/sb10.png" width="400px" />
+
+### Factor plots
+
+A factor, or box plot an also be made relatively easy with seaborn. A factorplot is also very usefull to find correlations among data with more than 2 dimensions.
+
+``` python
+with seaborn sns.axes_style(style = 'ticks'):
+  sns.factorplot('day', 'total_bill', 'sex', data = tips, kind = 'box')
+  sns.set_axis_labels('Day', 'Total Bill')
+```
+
+<img src="./static/images/sb11.png" width="400px" />
+
+### Joint Distributions
+
+Personally I love statistics, especially joint versus marginal distributions. Seeing how to different variables are correlated with some kind of distribution, also having their own distribution. Our tips dataset has a variable `total_bill`, which has his own distribution and of course `tip` which has his own distribution. Since the tip is included in the total bill, we can safely say there is some correlation between the two, but what is some?
+
+Let's make a `sns.jointplot()`
+
+``` python
+with sns.axes_style('white'):
+  sns.joinplot("total_bill", "tip", data = tips, kind = 'hex')
+```
+
+<img src="./static/images/sb12.png" width="400px" />
+
+So like expected we can see that the tips are all in some kind of 10 percent region. Interesting, but we can do better with changing kind from `hex` to `reg`.
+
+``` python
+sns.jointplot('total_bill', 'tip', data = tips, kind = 'reg');
+```
+
+Creating a super informative, and an absolutely awesome plot with regression analysis with only one line of code!
+
+<img src="./static/images/sb13.png" width="400px" />
+
+Having a regression line coëfficiënt of almost 0.1, coincidence? 
