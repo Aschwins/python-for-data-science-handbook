@@ -1352,4 +1352,30 @@ Creating a super informative, and an absolutely awesome plot with regression ana
 
 <img src="./static/images/sb13.png" width="400px" />
 
-Having a regression line coëfficiënt of almost 0.1, coincidence? 
+Having a regression line coëfficiënt of almost 0.1, coincidence?
+
+### Bar Plots
+
+Time series can be plotted with `sns.factorplot()` In the following example well use the planets data again, which we've seen before, so we can show how easy it is to get beautifull plots with Seaborn again.
+
+``` python
+planets = sns.load_dataset('planets')
+
+with sns.axes_style('white'):
+  g = sns.factorplot('year', data = planets, aspect = 2, kind = 'count', color = 'steelblue')
+  g.set_xticklabels(step = 5)
+```
+
+<img src="./static/images/sb14.png" width="400px" />
+
+Creating a nice plot on the amount of planets found each year with only one line of code!
+
+We can learn more by also looking at the `method` variable contained in this dataset, which shows us what method was used for finding the planet.
+
+``` python
+with sns.axes_style('white'):
+  g = sns.factorplot('year', data = planets, aspect = 4.0, kind = 'count', hue = 'method', order = range(2001, 2015))
+  g.set_ylabels('Number of Planets Discovered')
+```
+
+<img src="./static/images/sb15.png" width="400px"
