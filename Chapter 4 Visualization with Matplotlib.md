@@ -1379,3 +1379,22 @@ with sns.axes_style('white'):
 ```
 
 <img src="./static/images/sb15.png" width="400px"
+
+## Further Resources
+
+http://matplotlib.org/
+
+http://matplotlib.org/gallery.html
+
+http://bit.ly/2fSqswQ
+
+### Other Python Graphics Libraries
+Although Matplotlib is the most prominent Python visualization library, there are other more modern tools that are worth exploring as well. I’ll mention a few of them briefly here:
+
+• ![Bokeh](http://bokeh.pydata.org) is a JavaScript visualization library with a Python frontend that creates highly interactive visualizations capable of handling very large and/or streaming datasets. The Python frontend outputs a JSON data structure that can be inter‐ preted by the Bokeh JS engine.
+
+• ![Plotly](http://plot.ly) is the eponymous open source product of the Plotly company, and is simi‐ lar in spirit to Bokeh. Because Plotly is the main product of a startup, it is receiv‐ ing a high level of development effort. Use of the library is entirely free.
+
+• ![Vispy](http://vispy.org/) is an actively developed project focused on dynamic visualizations of very large datasets. Because it is built to target OpenGL and make use of efficient graphics processors in your computer, it is able to render some quite large and stunning visualizations.
+
+• ![Vega](https://vega.github.io/) and Vega-Lite are declarative graphics representations, and are the product of years of research into the fundamental language of data visualization. The ref‐ erence rendering implementation is JavaScript, but the API is language agnostic. There is a Python API under development in the Altair package. Though it’s not mature yet, I’m quite excited for the possibilities of this project to provide a com‐ mon reference point for visualization in Python and other languages.
