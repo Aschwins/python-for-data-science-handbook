@@ -1391,7 +1391,7 @@ http://bit.ly/2fSqswQ
 ### Other Python Graphics Libraries
 Although Matplotlib is the most prominent Python visualization library, there are other more modern tools that are worth exploring as well. I’ll mention a few of them briefly here:
 
-• [http://bokeh.pydata.org](Bokeh) is a JavaScript visualization library with a Python frontend that creates highly interactive visualizations capable of handling very large and/or streaming datasets. The Python frontend outputs a JSON data structure that can be inter‐ preted by the Bokeh JS engine.
+• [Bokeh](http://bokeh.pydata.org) is a JavaScript visualization library with a Python frontend that creates highly interactive visualizations capable of handling very large and/or streaming datasets. The Python frontend outputs a JSON data structure that can be inter‐ preted by the Bokeh JS engine.
 
 • ![Plotly](http://plot.ly) is the eponymous open source product of the Plotly company, and is simi‐ lar in spirit to Bokeh. Because Plotly is the main product of a startup, it is receiv‐ ing a high level of development effort. Use of the library is entirely free.
 
