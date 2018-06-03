@@ -31,3 +31,7 @@ Written by Christopher Bishop, this classic technical text covers the concepts o
 Written by Kevin Murphy, this is an excellent graduate-level text that explores nearly all important machine learning algorithms from a ground-up, unified probabilistic perspective.
 
 These resources are more technical than the material presented in this book, but to really understand the fundamentals of these methods requires a deep dive into the mathematics behind them. If you’re up for the challenge and ready to bring your data science to the next level, don’t hesitate to dive in!
+
+# Machine Learning
+
+<img src="./static/images/ml1.png" width="400px" />
