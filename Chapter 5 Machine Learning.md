@@ -60,9 +60,11 @@ A great machine learning library is Scikit Learn, or sklearn in short. Using thi
 * Apply the model to new data, by call the `.predict()`
 * Evaluate the model
 
-## Simple linear regression example
+### Supervised Learning Example: Simple linear regression
 
 <img src="./static/images/ml2.png" width="400px" />
+
+Let's start of with a small dataset configured with the following code. There is a linear correlation between the x and y data (axis) for all points in the dataset. The goal of linear regression is to build a model which simulates this correlation so we can make predictions on datapoints not in the original dataset.
 
 ``` python
 # importing the linear regression module
@@ -94,3 +96,51 @@ plt.plot(xfit, yfit);
 ```
 
 <img src="./static/images/ml3.png" width="400px" />
+
+With our model being represented with the blue line. Which has a intercept and coefficient.
+
+``` python
+In [27]: model.coef_
+Out[27]: array([1.9755672])
+
+In [28]: model.intercept_
+Out[28]: -0.3853261759566511
+```
+
+And we've build our first Machine Learning Model! Oh my god!
+
+### Supervised Learning Example: Iris Classification
+
+After building out first model, we're (of course) very excited to build our second model. But for this example we should use something more exciting and make real predictions! Let's go back to our trusty iris dataset and see if we can build a model on one part of the dataset and with this model make predictions on the other part of data. Later we can compare results and see how good the model actually is.
+
+For this we're going to use a very simple classification model called Gaussian Naive Bayes.
+
+``` python
+# Load the iris dataset and define the matrix of features and target vector
+iris = sns.load_dataset('iris')
+X_iris = iris.drop('species', axis = 1)
+y_iris = iris['species']
+
+# import function that automatically splits the data in a training and a test set.
+from sklearn.cross_validation import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X_iris, y_iris)
+
+# import a simple classification model
+from sklearn.naive_bayes import GaussianNB
+model = GaussianNB()
+
+# train the model
+model.fit(X_train, y_train)
+
+# fit the model to the test-set
+y_model = model.predict(X_test)
+
+# evaluate the model
+from sklearn.metrics import accuracy_score
+accuracy_score(y_model, y_test)
+Out[69]: 0.9473684210526315
+```
+
+Already getting a whopping 95% accuracy!!
+
+### Unsupervised Learning Example: Dimensionality Reduction
