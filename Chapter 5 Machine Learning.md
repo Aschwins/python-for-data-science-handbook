@@ -59,3 +59,38 @@ A great machine learning library is Scikit Learn, or sklearn in short. Using thi
 * Fit the model to your data by calling the `.fit()` method.
 * Apply the model to new data, by call the `.predict()`
 * Evaluate the model
+
+## Simple linear regression example
+
+<img src="./static/images/ml2.png" width="400px" />
+
+``` python
+# importing the linear regression module
+from sklearn.linear_model import LinearRegression
+
+# Creating some data with a linear correlation
+rng = np.random.RandomState(40)
+x = 10 * rng.rand(50)
+y = 2 * x + 1 - rng.rand(50)
+
+# Features matix X has to be a matrix
+X = x[:, np.newaxis]
+
+# Initiate a linear model
+model = LinearRegression(fit_intercept = True)
+
+# Fit the model to our data
+model.fit(X,y)
+
+# Predict values not in X
+xfit = np.linspace(-1, 11)
+Xfit = xfit[:, np.newaxis]
+
+yfit = model.predict(Xfit)
+
+# Plot the results
+plt.scatter(x,y)
+plt.plot(xfit, yfit);
+```
+
+<img src="./static/images/ml3.png" width="400px" />
