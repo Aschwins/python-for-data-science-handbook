@@ -34,4 +34,28 @@ These resources are more technical than the material presented in this book, but
 
 # Machine Learning
 
+With Machine Learning one can learn a computer to find patterns in data. And make predictions on these pattern for new not yet found data. One of the most famous examples of data where machine learning can be applied is the iris dataset, found in the seaborn library.
+
+``` python
+import seaborn as sns
+sns.set()
+iris = sns.load_dataset('iris')
+
+sns.pairplot(iris, hue = 'species', size = 1.5)
+```
+
 <img src="./static/images/ml1.png" width="400px" />
+
+This iris dataset contains the features of the plants, like the length and width of their petal. And it also contains it's species. With the features known one can make predictions on what kind of species of iris the plant is. This is the essence of machine learning.
+
+Finding patterns in a features matrix on a target array in a training set. To make superb predictions in a target set. Since we have a training and a test set, this is called supervised learning. We're learning the algorithm what is good and bad. The other part of machine learning is unsupervised machine learning where it doesn't have a target vector and is just asked to find patterns.
+
+## Scikit Learn
+
+A great machine learning library is Scikit Learn, or sklearn in short. Using this library of API always goes about in similar fashion.
+
+* Pick a model
+* Define a features matrix X and target vector y
+* Fit the model to your data by calling the `.fit()` method.
+* Apply the model to new data, by call the `.predict()`
+* Evaluate the model
