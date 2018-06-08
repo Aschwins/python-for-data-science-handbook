@@ -144,3 +144,46 @@ Out[69]: 0.9473684210526315
 Already getting a whopping 95% accuracy!!
 
 ### Unsupervised Learning Example: Dimensionality Reduction
+
+Now since we've already seen the iris dataset a couple of times, we're not going in to much dept. The iris dataset contains four dimensions in the feature space: `sepal_length  sepal_width  petal_length  petal_width` and of course it's target vector of one dimension `species`. Visualising this 4/5 dimensional data in a two dimensional plot will be very hard. But with dimensionality reduction this is possible.
+
+We'll compress the four dimensions in two dimensions trying to maintain as much of the variance of the data as possible with Principle Component Analysis or PCA for short.
+
+``` python
+import seaborn as sns
+iris = sns.load_dataset('seaborn')
+X_iris = iris.drop('species', axis = 1)
+y_iris = iris['species']
+
+from sklearn.decomposition import PCA
+model = PCA(n_components = 2)
+model.fit(X_iris)
+X_2d = model.transform(X_iris)
+
+iris['PCA1'] = X_2d[:, 0]
+iris['PCA2'] = X_2d[:, 1]
+
+sns.lmplot("PCA1", "PCA2", data = iris, hue = 'species', fit_reg = False)
+```
+
+Giving us the nice two dimensional plot with a third dimension of species on the colors.
+
+<img src="./static/images/ml4.png" width="400px" />
+
+### Unsupervised Learning Example: Iris Clustering
+
+Next we'll try a clustering algorithm on the data. A clustering algorithm tries to find distict groups of data without having a target vector. For the iris dataset we'll use the Gaussian Mixture Model or GMM for short. A GMM tries to model the data as a collection of Gaussian blobs.
+
+``` python
+from sklearn.mixture import GMM
+model = GMM(n_components = 3, covariance_type = 'full')
+model.fit(X_iris)
+y_gmm = model.predict(X_iris)   #predicting y labels
+
+iris['cluster'] = y_gmm
+sns.lmplot("PCA1", "PCA2", data = iris, hue = 'species', col = 'cluster', fit_reg = False)
+```
+
+This way we've told an algorithm to find a model that splits the data in three distinct groups without telling the algorithm anything about the target vector `species`. Because we've splitted the plot among the clusters we can very well see how well the model actually did. We can see that it was hundred percent accurate on find the cluster 0 species, while there is some mixture between the 1st and 2nd cluster. Supercool stuff!!
+
+<img src="./static/images/ml5.png" width="800px" />
