@@ -187,3 +187,6 @@ sns.lmplot("PCA1", "PCA2", data = iris, hue = 'species', col = 'cluster', fit_re
 This way we've told an algorithm to find a model that splits the data in three distinct groups without telling the algorithm anything about the target vector `species`. Because we've splitted the plot among the clusters we can very well see how well the model actually did. We can see that it was hundred percent accurate on find the cluster 0 species, while there is some mixture between the 1st and 2nd cluster. Supercool stuff!!
 
 <img src="./static/images/ml5.png" width="800px" />
+
+
+<img src="./static/images/ml6.png" width="500px" />
