@@ -190,3 +190,13 @@ This way we've told an algorithm to find a model that splits the data in three d
 
 
 <img src="./static/images/ml6.png" width="500px" />
+
+
+``` python
+In [71]: accuracy_score(y_pred, y_test)
+Out[71]: 0.8266666666666667
+```
+
+<img src="./static/images/ml7.png" width="500px" />
+
+<img src="./static/images/ml6.png" width="500px" />
