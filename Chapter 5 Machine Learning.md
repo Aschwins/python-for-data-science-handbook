@@ -188,15 +188,107 @@ This way we've told an algorithm to find a model that splits the data in three d
 
 <img src="./static/images/ml5.png" width="800px" />
 
+### Application: Exploring Handwritten Digits
+
+Let's explore what we've learned so far, and apply it to a cool problem working with image recognition. We extract a dataset called digits. Containing 1797 handwritten digits.
+
+``` python
+from sklearn.datasets import load_digits
+digits = load_digits()
+```
+
+After some exploration we see 8 x 8 arrays of dark intensity. We can visualize these images using `plt.imshow()`. Let's write some code to visualize the first 100 images.
+
+``` python
+fig, ax = plt.subplots(10,10, figsize = (8,8), subplot_kw = {'xticks': [], 'yticks': []}, gridspec_kw = dict(hspace = 0.1, wspace = 0.1))
+for i, ax in enumerate(ax.flat):
+  ax.imshow(digits.images[i], cmap = 'binary', interpolation = 'nearest')
+  ax.text(0.05,0.05, str(digits.target[i]), transform = ax.transAxes, color = 'green' )
+```
 
 <img src="./static/images/ml6.png" width="500px" />
 
+Now we want to build an algorithm which can predict what number is written. To do this we'll have to flatten the 8 x 8 array to 64 features and have the target array be the target array...
+
+``` python
+X = digits.data
+y = digits.target
+```
+
+### Unsupervised Learning: Dimensionality Reduction
+
+Let's try to shrink 64 dimensions in 2 dimensions!! Can we do it?
+
+``` python
+from sklearn.manifold import Isomap
+iso = Isomap(n_components = 2)
+iso.fit(X)
+data_projected = iso.transform(X)
+```
+
+Now that we've transformed the data to two dimensions we can visualize the different numbers by coloring them with the targets.
+
+``` python
+plt.scatter(data_projected[:,0], data_projected[:,1], c = digits.target, edge_color = 'none', alpha = 0.5, cmap = plt.cm.get_cmap('nipy_spectral', 10))
+plt.colorbar(label = 'digitlabel', ticks = range(10))
+plt.clim(-0.5, 9.5)
+```
+
+<img src="./static/images/iso1.png" width="500px" />
+
+
+Gives us an image where we can clearly see the different numbers being clustered together. We also get some insights on what numbers are similar. We can see 0 and 1 are almost opposites (makes sense) if you look at them. And for example 0, 6 and 8 are quite similar.
+
+Let's see if we can build an algorithm that classifies all the different handwritten digits among their correct number.
+
+### Classification on Digits
+
+Note: There is a small mistake in the book and we have to define the features and target vector as a dataframe and a series. This way we can keep track of the labels and see how good the model is actually doing.
+
+We'll use the Gaussian Naive Bayes like we've done before. First we have to define the training and the test set. `sklearn` works really well with pandas so defining labels on the dataframe will carry on to `train_test_split`.
+
+``` python
+X = pd.DataFrame(X)
+y = pd.Series(y)
+
+from sklearn.cross_validation import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y)
+
+# train the model
+from sklearn.naive_bayes import GaussianNB()
+model = GaussianNB()
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+```
+
+Now we have `y_pred` as the predictions, we can check how good our model actually is.
 
 ``` python
 In [71]: accuracy_score(y_pred, y_test)
 Out[71]: 0.8266666666666667
 ```
 
+With already 82% accuracy, not bad! To get some insights in how well the algorithm is actually doing we can produce the same image as before, with predicted labels this time. Since there is a mistake in the book we have to change the code slightly to get the wanted result. To get some insights a lot quicker one can take a look at the confusion matrix.
+
+``` python
+from sklearn.metrics import confusion_matrix
+mat = confusion_matrix(y_pred, y_test)
+
+sns.heatmap(mat, square = True, annot = True, cbar = False)
+plt.xlabel('predicted value')
+plt.ylabel('real value')
+```
+
 <img src="./static/images/ml7.png" width="500px" />
 
-<img src="./static/images/ml6.png" width="500px" />
+We see where most mistakes get made, let's take a look why these mistakes are made.
+
+``` python
+fig, ax = plt.subplots(10, 10, figsize = (8,8), subplot_kw = {'xticks' : [], 'yticks' : []}, gridspec_kw = dict(hspace = 0.1, wspace = 0.1))
+
+for i, ax in enumerate(ax.flat):
+  ax.imshow(digits.images[y_test.index[i]], cmap = 'binary', interpolation = 'nearest')
+  ax.text(0.05, 0.05, str(y_pred[i]), transform = ax.transAxes, color = 'green' if (y_test[y_test.index[i]] == y_pred[i]) else 'red')
+```
+
+<img src="./static/images/ml8.png" width="500px" />
