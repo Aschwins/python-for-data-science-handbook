@@ -281,7 +281,7 @@ plt.ylabel('real value')
 
 <img src="./static/images/ml7.png" width="500px" />
 
-We see where most mistakes get made, let's take a look why these mistakes are made.
+We see where most mistakes get made, let's take a look why these mistakes are made. This code is slightly altered compared to the book. (`y_test.index[i]` inserted instead of `i`)
 
 ``` python
 fig, ax = plt.subplots(10, 10, figsize = (8,8), subplot_kw = {'xticks' : [], 'yticks' : []}, gridspec_kw = dict(hspace = 0.1, wspace = 0.1))
@@ -292,3 +292,54 @@ for i, ax in enumerate(ax.flat):
 ```
 
 <img src="./static/images/ml8.png" width="500px" />
+
+Gives us some good information on where the mistakes are made. We can conclude the mistakes that are being made are quite understandable from an algorithm's perspective.
+
+## Hyperparameters and Model Validation
+
+We've learned that applying a supervised machine learning model, goes like:
+
+1. Choose a class of model
+2. Choose model hyperparameters
+3. Fit the model to the training data
+4. Use the model to predict labels on new data
+
+Here step 3 and 4 are crucial for validating your model. We need to test the model on new data to see if it does well! That's why we always split the entire data set in a training set and a test set. We train the model on the training set and validate the accuracy of the model on the test set.
+
+Slice your data can be done in several ways, and might influence your model validation. There is a very handy way of validating your model by cross validating your training and test set, that is, picking another split between training and test set and computing accuracy scores for each cross validation.
+
+### Example: K-fold cross validation
+
+``` python
+from sklearn.datasets import load_iris
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+from sklearn.neighbors import KNeighborsClassifier
+model = KNeighborsClassifier()
+
+from sklearn.cross_validation import cross_val_score
+scores = cross_val_score(model, X, y, cv=5)
+scores
+Out[1]: array([0.96666667, 1.        , 0.93333333, 0.96666667, 1.        ])
+
+import numpy as np
+np.mean(scores)
+Out[5]: 0.9733333333333334
+```
+
+Giving us a pretty high accuracy score. So the model seems valid!
+
+## Selecting the Best Model
+
+Now that we've seen the basics of model validation and model cross validation, we'll dive into the curious world of hyperparameters! Picking hyperparameters is highly influential for picking a good model. If we have a bad model we can improve it by selecting another model or tweaking the hyperparameters. We'll try to answer the following question:
+
+"If my estimator is bad, how can we improve it?"
+
+1. Use a more complicated/more flexible model
+2. Use a less complicated/less flexible model
+3. Gather more training examples
+4. Gather more data to add features to each sample
+
+### The Bias Variance Trade Off
