@@ -343,3 +343,29 @@ Now that we've seen the basics of model validation and model cross validation, w
 4. Gather more data to add features to each sample
 
 ### The Bias Variance Trade Off
+
+Fundamentally, the question of "the best model" is about finding the sweet spot in the trade-off between **bias** and **variance**.
+
+* High-bias model: Underfits the data. Does nog have enough model flexibility to suitably account for all the features in the data.
+
+* High-variance model: Overfits the data. Has to much model flexibility that the model ends up accounting for random errors.
+
+How well a model performs can be measured with the R^2 score, or the coefficient of determination. R^2 = 1 indicates a perfect match, R^2 = 0 indicate the model does no better than simply taking the mean of the data, and negative values mean even worse models.
+
+* For high bias models the performance of the model on the validation set is similar to the performabnce on the training set.
+
+* For high-variance models, the performance of the model on the validation set is far worse than the performance on the training set.
+
+If we have the ability to tune the model complexity, we would expect the training score and validation score to behave as illustrated:
+
+<img src="./static/images/ml9.png" width="500px" />
+
+### Validation curves in Scikit-Learn
+
+
+
+<img src="./static/images/ml10.png" width="500px" />
+
+<img src="./static/images/ml11.png" width="500px" />
+
+<img src="./static/images/ml12.png" width="500px" />
