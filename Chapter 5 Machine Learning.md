@@ -362,7 +362,41 @@ If we have the ability to tune the model complexity, we would expect the trainin
 
 ### Validation curves in Scikit-Learn
 
+Let's start of by creating some fake data and trying to fit several polynomial regression models to the data. We'll see soon enough what models will work and what models will fail. Let's take the bias/variance trade-off in to account.
 
+``` python
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.linear_model import LinearRegression
+from sklearn.pipeline import make_pipeline
+
+def PolynomialRegression(degree = 2, **kwargs):
+  make_pipeline(PolynomialFeatures(degree), LinearRegression(**kwargs))
+
+def make_data(N, err = 1.0, rseed = 1):
+  rng = np.random.RandomState(rseed)
+  X = rng.rand(N, 1) ** 2                   # N random X values squared, so concentrated between [0,1]
+  y = 10 - 1./(X.ravel() + 0.1)             # No devision by 0, so values don't blow up. X = 0 -> y=0, X = infinity -> y=10
+  if err > 0:                               # error factor added to y.
+    y += err + rng.randn(N)
+  return X,y
+
+X,y = make_data(40)
+
+matplotlib                                  # using matplotlib backend
+import seaborn as sns
+sns.set()
+
+X_test = np.linspace(-0.1, 1.1, 500)[:, None]     # We need the data in [500,1] shape for the linear model
+
+plt.scatter(X.ravel(), y, color = 'black')        # We need the data in [40,] shape for plotting
+axis = plt.axis()
+for degree in [1,2,3]:
+  y_test = PolynomialRegression(degree).fit(X,y).predict(X_test)
+  plt.plot(X_test.ravel(), y_test, label = 'degree = {0}'.format(degree))
+plt.xlim(-1.0, 1.0)
+plt.ylim(-2,12)
+plt.legend(loc = 'best')
+```
 
 <img src="./static/images/ml10.png" width="500px" />
 
