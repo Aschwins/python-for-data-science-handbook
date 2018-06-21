@@ -400,6 +400,55 @@ plt.legend(loc = 'best')
 
 <img src="./static/images/ml10.png" width="500px" />
 
+In the image above we see 3 models with a different degree trying to predict the data. From this chart it's not directly clear what model is best. It's probably not the linear model, but the 3rd degree or the 5th degree polynomial good both be a good fit right?
+
+Now to solve this issue we can plot the validation curve of a polynomial model with different degrees.
+
+``` python
+from sklearn.learning_curve import validation_curve
+degree = np.arange(0,21)
+train_score, val_score = validation_curve(PolynomialRegression(), X, y, 'polynomialfeatures__degree', degree, cv = 7)
+
+plt.plot(degree, np.median(train_score), 1), color = 'blue', label = 'training score')
+plt.plot(degree, np.median(val_score), 1), color = 'red', label = 'validation score')
+plt.legend(loc = 'best')
+plt.ylim(0,1)
+plt.xlabel('degree')
+plt.ylabel('score')
+```
+
 <img src="./static/images/ml11.png" width="500px" />
 
+From the image above we can see that the optimal degree for the polynomial is 3. This is because there is a peak in validation score with a polynomial of degree 3.
+
+### Learning Curves
+
+We've seen that hyperparameters are very important in choosing a good model. The model with degree 3 was clearly better than a model with a different degree. We've also stated that there is another factor in creating a good model: 'The amount of data'. The more data we feed into a model, the better the model becomes in making predictions.
+
+``` python
+X2,y2 = make_data(200)
+plt.scatter(X2.ravel(), y2)
+```
+
 <img src="./static/images/ml12.png" width="500px" />
+
+We'll duplicate the preceding code in order to show the difference in learning rates if more data is given.
+
+``` python
+degree = np.arange(21)
+train_score, val_score = validation_curve(PolynomialRegression(), X, y, 'polynomialfeatures__degree', degree, cv = 7)
+train_score2, val_score2 = validation_curve(PolynomialRegression(), X2, y2, 'polynomialfeatures__degree', degree, cv = 7)
+
+plt.plot(degree, np.median(train_score, 1), color = 'blue', linestyle = 'dashed', alpha = 0.3, label = 'training score (N=40)')
+plt.plot(degree, np.median(val_score, 1), color = 'red', linestyle = 'dashed', alpha = 0.3, label = 'validation score (N=40)')
+
+plt.plot(degree, np.median(train_score2, 1), color = 'blue', label = 'training score (N=200)')
+plt.plot(degree, np.median(val_score2, 1), color = 'red', label = 'validation score (N=200)')
+plt.ylim(0,1)
+plt.xlim(-0.5, 21,5)
+plt.legend(loc = 'best')
+plt.xlabel('degree')
+plt.ylabel('score')
+```
+
+We see that the model complexity doesn't really matter that much anymore if you have enough data. Models are not really overfitting since they have enough reference points! Robust models, yay!
