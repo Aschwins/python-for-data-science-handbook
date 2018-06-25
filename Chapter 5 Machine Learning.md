@@ -452,3 +452,31 @@ plt.ylabel('score')
 ```
 
 We see that the model complexity doesn't really matter that much anymore if you have enough data. Models are not really overfitting since they have enough reference points! Robust models, yay!
+
+### Learning curves in scikit learn.
+
+So now we know that with more data, models are able to perform a lot better. But how much better is the question? Just like above it's sometimes wise to plot the behaviour of a model with different amounts of data points. These are know as learning curves. In general we expect learning curves to behave a little like this:
+
+<img src="./static/images/screenshot1.png" width="500px" />
+
+But with scikit learn we're able to plot our own learning curves. This way it's easier to determine how much training data we actually need for a valid model. Let's plot the learning curve for a 2nd and 9th degree polynomial regression model.
+
+``` python
+from sklearn learning_curve import learning_curve
+fig, ax = plt.subplots(1,2, figsize = (16,6))
+fig.subplots_adjust(left = 0.025, right = 0.95, wspace = 0.1)
+
+for i, degree in enumerate([2,9]):
+  N, train_lc, val_lc = learning_curve(PolynomialRegression(degree), X, y, cv=7, train_sizes = np.linspace(0.3,1,25))
+  ax[i].plot(N, np.mean(train_lc, 1), color = 'blue', label = 'training score')
+  ax[i].plot(N, np.mean(val_lc, 1), color = 'red', label = 'validation score')
+  ax[i].hlines(np.mean([train_lc[-1], val_lc[-1]]), N[0], N[-1], color = 'gray', linestyle = 'dashed') # Plotting the convergence asymptote
+  ax[i].set_xlabel('training size')
+  ax[i].set_ylabel('score')
+  ax[i].set_ylim(0,1)
+  ax[i].set_xlim(N[0], N[-1])
+  ax[i].set_title('degree = {0}'.format(degree))
+  ax[i].legend(loc = 'best')
+```
+
+<img src="./static/images/ml13.png" width="500px" />
